@@ -1,0 +1,17 @@
+*.vcxproj
+*.filters
+cmake_install.cmake
+CMakeCache.txt
+*.sln
+.vs/
+bin/
+CMakeFiles/
+data/models/40head.stl
+data/models/engine_block.mtl
+data/models/engine_block.obj
+data/models/Ford_Engine_Block_001.mtl
+data/models/Ford_Engine_Block_001.obj
+dep/
+src/output/
+src/SurfExtract.dir/
+x64/

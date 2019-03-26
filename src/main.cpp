@@ -40,12 +40,6 @@ Last edits:
 #include "ArgParser.h"
 
 
-string path = "../data/models/engine_block.obj";
-//string path = "../data/models/Rubber_Duck_02.obj";
-
-
-string output_path = "engine_points.obj";
-
 int						_image_width = 1024; 
 int						_image_height = 1024;
 int						_window_width = 2048; 
@@ -89,7 +83,7 @@ int main(int argc, char** argv) {
 
 
 	SurfExtractApp* sea = new SurfExtractApp();
-	sea->loadModel(path);
+	sea->loadModel(arg.model_path_and_file);
 	sea->setCameraDistance(arg.camera_distance);
 	sea->setPointCloudDensity(arg.voxel_grid_size);
 	sea->setVerbose(arg.verbose);

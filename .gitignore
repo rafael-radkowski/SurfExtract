@@ -11,7 +11,8 @@ data/models/engine_block.mtl
 data/models/engine_block.obj
 data/models/Ford_Engine_Block_001.mtl
 data/models/Ford_Engine_Block_001.obj
-dep/
 src/output/
 src/SurfExtract.dir/
+dep
 x64/
+*.user

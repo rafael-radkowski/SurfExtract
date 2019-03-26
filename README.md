@@ -8,11 +8,10 @@ Figure 1: Overview working principle: The tool renders surface data from multipl
 
 Subsequent sampling prevent duplicates and also allows one to reduce the point cloud density via a voxel grid. 
 
-![](https://github.com/rafael-radkowski/SurfExtract/blob/master/data/media/PointCloudSampling.jpeg | width=300)
-
+![](https://github.com/rafael-radkowski/SurfExtract/blob/master/data/media/PointCloudSampling.jpeg )
 
 ### Prerequisites
-All code runs (tested) on Windows 10, Version 1803.
+All code runs (tested) on Windows 10, Version 1803. It was developed with Visual Studio 2017.
 It requires the following 3rd party tools:
  * [OpenCV v3.4.5](https://opencv.org)
  * [Eigen3 v3.3.7](http://eigen.tuxfamily.org)
@@ -22,3 +21,22 @@ It requires the following 3rd party tools:
  
 Additinally, all code from my OpenGL utils folder is required:
  * [OpenGL Helpers](https://github.com/rafael-radkowski/GLSupport)
+
+### Usage
+Use command line arguments to configure the application; syntax:
+```
+SurfExtract.exe [input_path_and_file.obj] -o [output_path_and_file.obj] -c [camera_distance] -d [voxel_grid_distance]
+```
+with
+* -o the output path and file. Currently, only .obj files are written.
+* -c the camera distance. Find a distance that covers your model size. 
+* -d uniform voxel grid size. This values determines the number of points. 
+
+Example:
+```
+ SurfExtract.exe ../data/models/Rubber_Duck_02.obj -o point_cloud.obj  -c 4.5 -d 0.025
+```
+
+### Known issues and shortcommings
+* The .obj model input requires an mtl material file. Otherwise, the obj loader does not process the file. Create an empty one if you do not have one.
+* Mind your model size. The default camera is quite close. So if your model vertex values are huge, you might end up inside the model. This will be changed in future. 

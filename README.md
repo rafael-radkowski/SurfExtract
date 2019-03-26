@@ -3,7 +3,7 @@ The application extracts a point cloud from all visible surfaces of a mesh model
 The tool renders the surface of a 3D model from multiple locations around a sphere into a 32bit fbo. 
 The pixels contain just model positions and a point for each valid pixel is created. 
 
-![Figure 1: Overview working principle: The tool renders surface data from multiple locations into a 32 bit fbo. The data is sampled to generated point clouds. The point clouds are merged and a uniform voxel grid prevents duplicates.](https://github.com/rafael-radkowski/SurfExtract/blob/master/data/media/Overview.jpeg | width=300)
+![Figure 1: Overview working principle: The tool renders surface data from multiple locations into a 32 bit fbo. The data is sampled to generated point clouds. The point clouds are merged and a uniform voxel grid prevents duplicates.](https://github.com/rafael-radkowski/SurfExtract/blob/master/data/media/Overview.jpeg)
 Figure 1: Overview working principle: The tool renders surface data from multiple locations into a 32 bit fbo. The data is sampled to generated point clouds. The point clouds are merged and a uniform voxel grid prevents duplicates.
 
 Subsequent sampling prevent duplicates and also allows one to reduce the point cloud density via a voxel grid. 

@@ -40,3 +40,4 @@ Example:
 ### Known issues and shortcommings
 * The .obj model input requires an mtl material file. Otherwise, the obj loader does not process the file. Create an empty one if you do not have one.
 * Mind your model size. The default camera is quite close. So if your model vertex values are huge, you might end up inside the model. This will be changed in future. 
+* The code does not calculate normal vectors for the pionts. This will also change in future. 

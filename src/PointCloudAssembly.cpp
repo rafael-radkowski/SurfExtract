@@ -29,7 +29,7 @@ defined via the sampling grid size
 */
 void PointCloudAssembly::setPointCloudDensity(float density)
 {
-	if (density < 0.0049) return;
+	if (density < 0.0001) return;
 
 	_user_param.grid_x = density;
 	_user_param.grid_y = density;

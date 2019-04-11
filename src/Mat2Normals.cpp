@@ -31,23 +31,23 @@ void Mat2Normals::process(cv::Mat& mat, cv::Mat& dst_normals)
 			if (i < rows && j < cols) {
 				cv::Vec3f p = mat.at<cv::Vec3f>(i, j);
 				float sum = p[0] + p[1] + p[2];
-				
+
 				// check if p is a valid point 
 				if (sum == 0.0)  continue;
 
 				vector<cv::Vec3f> normal_vectors;
-				
-				cv::Vec3f p_r = cv::Vec3f(0,0,0);
-				cv::Vec3f p_d = cv::Vec3f(0,0,0);
-				cv::Vec3f p_l = cv::Vec3f(0,0,0);
-				cv::Vec3f p_u = cv::Vec3f(0,0,0);
+
+				cv::Vec3f p_r = cv::Vec3f(0, 0, 0);
+				cv::Vec3f p_d = cv::Vec3f(0, 0, 0);
+				cv::Vec3f p_l = cv::Vec3f(0, 0, 0);
+				cv::Vec3f p_u = cv::Vec3f(0, 0, 0);
 				bool dir[4] = { 0,0,0,0 };
 				if (j + 1 < cols) {
 					p_r = mat.at<cv::Vec3f>(i, j + 1) - p;
 					dir[0] = true;
 				}
-				if (j - 1 >= 0) { 
-					p_l = mat.at<cv::Vec3f>(i, j - 1) - p; 
+				if (j - 1 >= 0) {
+					p_l = mat.at<cv::Vec3f>(i, j - 1) - p;
 					dir[1] = true;
 				}
 				if (i + 1 < rows) {
@@ -59,17 +59,29 @@ void Mat2Normals::process(cv::Mat& mat, cv::Mat& dst_normals)
 					dir[3] = true;
 				}
 
-				if(dir[0]&& dir[2])
-					normal_vectors.push_back(cross(p_r, p_d));
+				if (dir[0] && dir[2]) {
+					cv::Vec3f x = cross(p_r, p_d);
+					//if(isnan(x[0]) || isnan(x[1]) || isnan(x[2]))
+						normal_vectors.push_back(x);
+				}	
 
-				if(dir[2]&& dir[1])
-					normal_vectors.push_back(cross(p_d, p_l));
+				if (dir[2] && dir[1]) {
+					cv::Vec3f x = cross(p_d, p_l);
+					//if (isnan(x[0]) || isnan(x[1]) || isnan(x[2]))
+						normal_vectors.push_back(x);
+				}
 
-				if(dir[1]&& dir[3])
-					normal_vectors.push_back(cross(p_l, p_u));
+				if (dir[1] && dir[3]) {
+					cv::Vec3f x = cross(p_l, p_u);
+					//if (isnan(x[0]) || isnan(x[1]) || isnan(x[2]))
+						normal_vectors.push_back(x);
+				}
 
-				if(dir[3]&& dir[0])
-					normal_vectors.push_back(cross(p_u, p_r));
+				if (dir[3] && dir[0]) {
+					cv::Vec3f x = cross(p_u, p_r);
+					//if (isnan(x[0]) || isnan(x[1]) || isnan(x[2]))
+						normal_vectors.push_back(x);
+				}
 
 				cv::Vec3f normal = cv::Vec3f(0,0,0);
 				for (auto n : normal_vectors) {

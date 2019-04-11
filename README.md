@@ -7,8 +7,16 @@ The pixels contain just model positions and a point for each valid pixel is crea
 Figure 1: Overview working principle: The tool renders surface data from multiple locations into a 32 bit fbo. The data is sampled to generated point clouds. The point clouds are merged and a uniform voxel grid prevents duplicates.
 
 Subsequent sampling prevent duplicates and also allows one to reduce the point cloud density via a voxel grid. 
+In addition, the application also calcualtes surface normal vectors as a cross product and writes them into the obj file. 
 
 ![](https://github.com/rafael-radkowski/SurfExtract/blob/master/data/media/PointCloudSampling.jpeg )
+
+The latest version of the software also calculates normal vectors as the figure below shows. 
+All vectors are normalized; the viewer renders them quite short so that the model remains visile. 
+The normal vectors - its renderer - can be enabled by pressing '3' after the surface point extraction is done.
+
+![](https://github.com/rafael-radkowski/SurfExtract/blob/master/data/media/normalvectors.png )
+
 
 ### Prerequisites
 All code runs (tested) on Windows 10, Version 1803. It was developed with Visual Studio 2017.
@@ -40,4 +48,4 @@ Example:
 ### Known issues and shortcommings
 * The .obj model input requires an mtl material file. Otherwise, the obj loader does not process the file. Create an empty one if you do not have one.
 * Mind your model size. The default camera is quite close. So if your model vertex values are huge, you might end up inside the model. This will be changed in future. 
-* The code does not calculate normal vectors for the pionts. This will also change in future. 
+* Some error messages appear at the beginning. IGNORE THEM.

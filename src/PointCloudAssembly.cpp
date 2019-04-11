@@ -29,7 +29,11 @@ defined via the sampling grid size
 */
 void PointCloudAssembly::setPointCloudDensity(float density)
 {
-	if (density < 0.0001) return;
+	if (density < 0.005) {
+		cout << "[ERROR] - The point cloud density is currently limited to 0.005 in function setPointCloudDensity." << endl;
+		cout << "[ERROR] - Change the code or scale your model. However, the change will affect the runtime and memory requirements." << endl;
+		return;
+	}
 
 	_user_param.grid_x = density;
 	_user_param.grid_y = density;
@@ -41,21 +45,22 @@ Add a data matrix to the current point cloud and invoke processing
 The matrix needs to be of type CV_32F_C3 with width x height x 3, 
 the channels encode the x, y, z values. 
 All empty points must contain values = 0
-@param data - the opencv matrix with the data. 
+@param data - the opencv matrix with the surface data as coordinates in 3D space. 
 */
 void PointCloudAssembly::addData(cv::Mat data)
 {
-	// get the points
+	// get the points  as vector from the matrix. 
 	_points_processing.clear();
-	_m2p.process(data, &_points_processing);
+	_normals_processing.clear();
+	_m2p.process(data, &_points_processing, &_normals_processing);
 
 	if(_verbose)
 		cout << "[INFO] - Generated " << _points_processing.size() << " points" << endl;
 
 
-	// Concatenate poitns
+	// Concatenate points
 	_points_original.points.insert( _points_original.points.end(), _points_processing.begin(), _points_processing.end() );
-	_points_original.normals.insert( _points_original.normals.end(), _points_processing.begin(), _points_processing.end() );
+	_points_original.normals.insert( _points_original.normals.end(), _normals_processing.begin(), _normals_processing.end() );
 
 
 	// Sample

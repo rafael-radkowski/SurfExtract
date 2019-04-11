@@ -1,4 +1,14 @@
 #pragma once
+/*
+class Mat2Points
+The class takes a matrix with surface points and copies all points into a vector.
+
+Rafael Radkowski
+Iowa State University
+rafael@iastate.edu
+Jan 2019
+MIT License. 
+*/
 
 
 
@@ -23,6 +33,10 @@
 #include <glm/gtx/quaternion.hpp> // quaternions
 
 
+// local
+#include "Mat2Normals.h"
+
+
 using namespace std;
 
 
@@ -35,9 +49,12 @@ public:
 
 
 	/*
-	Process an image and return points in 
+	Process an image and return points as vector.
+	@param mat - a 2d matrix with surface coordinates of the object of interest. 
+	@param points - a pointer to a vector to store the points as (x, y, z). 
+	@param normals - a pointer to a vector to store the normals as (x, y, z). 
 	*/
-	void process(cv::Mat& mat, std::vector<Eigen::Vector3f>* points);
+	void process(cv::Mat& mat, std::vector<Eigen::Vector3f>* points, std::vector<Eigen::Vector3f>* normals);
 
 
 	/*
@@ -50,6 +67,9 @@ public:
 private:
 
 	int			_stride;
+
+
+	Mat2Normals	_nc;
 
 
 };

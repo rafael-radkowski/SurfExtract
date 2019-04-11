@@ -13,6 +13,8 @@ SurfExtractApp::SurfExtractApp()
 	_verbose = false;
 	_enable_render_3d = true;
 	_enable_render_points = true;
+	_enable_render_normals = false;
+	_show_normals = false;
 	_pview_camera_distance = 3.5;
 	_pview_sub = 1;
 
@@ -36,7 +38,7 @@ SurfExtractApp::SurfExtractApp()
 
 	// point cloud renderer
 	_gl_pc = new GLPointCloudRenderer(_pca->getPointCloud().points, _pca->getPointCloud().points);
-
+	_gl_normals = new GLNormalsRenderer(_pca->getPointCloud().points, _pca->getPointCloud().normals);
 	
 
 	
@@ -98,6 +100,7 @@ void SurfExtractApp::render_fcn(glm::mat4 proj_matrix, glm::mat4 view_matrix)
 		if (!_output_done && _output_path.size() > 0) {
 			_pca->writeToFileOBJ(_output_path);
 			_output_done = true;
+			_enable_render_normals = true;
 		}
 	}
 	
@@ -109,6 +112,11 @@ void SurfExtractApp::render_fcn(glm::mat4 proj_matrix, glm::mat4 view_matrix)
 
 	if(_gl_pc && _enable_render_points)
 		_gl_pc->draw(proj_matrix, view_matrix);
+
+
+	if (_gl_normals  && _enable_render_normals)
+		_gl_normals->draw(proj_matrix, view_matrix);
+
 }
 
 /*
@@ -254,6 +262,11 @@ void SurfExtractApp::keyboard_cb(int key, int action)
 			break;
 		case 83: // s
 			_pca->writeToFileOBJ(_output_path);
+			break;
+		case 51: // 3
+			if (_show_normals) _show_normals = false;
+			else _show_normals = true;
+			if (_gl_normals) _gl_normals->enable(_show_normals);
 			break;
 
 		}

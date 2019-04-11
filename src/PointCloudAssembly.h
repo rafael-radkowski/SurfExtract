@@ -103,6 +103,7 @@ private:
 
 	// currently processing points
 	vector<Eigen::Vector3f> 		_points_processing;
+	vector<Eigen::Vector3f> 		_normals_processing;
 
 	// the points for the point cloud
 	PointCloud				    _points_ready;

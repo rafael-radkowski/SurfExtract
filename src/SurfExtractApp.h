@@ -43,7 +43,7 @@ Last edits:
 #include "PolyhedronViewRenderer.h"
 #include "PointCloudAssembly.h"
 #include "GLPointCloudRenderer.h"
-
+#include "GLNormalsRenderer.h"
 
 using namespace std::placeholders;
 using namespace std;
@@ -170,9 +170,12 @@ private:
 
 	// point cloud opengl renderer
 	GLPointCloudRenderer*	_gl_pc;
+	GLNormalsRenderer*		_gl_normals;
 
 	bool						_enable_render_3d;
 	bool						_enable_render_points;
+	bool						_enable_render_normals; // to enable the normal vector renderer automatically after all points are done
+	bool						_show_normals; // to allow the user to enable and disable the normal renderer
 	bool						_verbose;
 
 	bool					_output_done;

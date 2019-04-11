@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
 
 	arlab::ArgParser::Display();
 
-	cout << "------------------------------------------" << endl;
+	cout << "------------------------------------------------------------------------" << endl;
 	cout << "Keyboard commands, use" << endl;
 	cout << ", \t to increase the camera distance" << endl;
 	cout << ". \t to decrease the camera distance" << endl;
@@ -77,8 +77,8 @@ int main(int argc, char** argv) {
 	cout << "s \t to re-save the point cloud" << endl;
 	cout << "1 \t enable/disable 3D model rendering" << endl;
 	cout << "2 \t enable/disable point cloud rendering" << endl;
-	cout << "2 \t enable/disable point cloud rendering" << endl;
-	cout << "------------------------------------------" << endl;
+	cout << "3 \t enable/disable normal vector rendering (after all points are done)" << endl;
+	cout << "------------------------------------------------------------------------" << endl;
 	cout << "IGNORE THE MATERIAL WARNIGS\n\n" << endl;
 
 

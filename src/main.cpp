@@ -87,6 +87,7 @@ int main(int argc, char** argv) {
 	sea->setCameraDistance(arg.camera_distance);
 	sea->setPointCloudDensity(arg.voxel_grid_size);
 	sea->setVerbose(arg.verbose);
+	sea->setOutputScale(arg.output_scale);
 	sea->setOutputFilename(arg.output_path_filename);
 
 	sea->start();

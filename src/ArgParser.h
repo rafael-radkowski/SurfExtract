@@ -27,7 +27,7 @@ typedef struct _Arguments
 	
 	float	camera_distance;
 	float	voxel_grid_size;
-
+	float	output_scale; // all points will be scaled by this value before written to a file. 
 
 	bool	valid;
 	bool	verbose;
@@ -46,6 +46,7 @@ typedef struct _Arguments
 
 		camera_distance = 1.3;
 		voxel_grid_size = 0.04;
+		output_scale = 1.0;
 
 		verbose = false;
 		valid = false;

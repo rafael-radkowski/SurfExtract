@@ -70,6 +70,10 @@ Arguments ArgParser::Parse(int& argc, char** argv)
 			if (argc >= pos) opt.voxel_grid_size = atof(  string(argv[pos+1]).c_str() );
 			else ParamError(c_arg);
 		}
+		else if(c_arg.compare("-s") == 0){ // output scale
+			if (argc >= pos) opt.output_scale = atof(argv[pos+1]);
+			else ParamError(c_arg);
+		}
 		else if(c_arg.compare("-help") == 0 || c_arg.compare("-h") == 0){ // help
 			Help();
 		}
@@ -101,6 +105,7 @@ void ArgParser::Help(void)
 	cout << "\t-o [param] - set the output path" << endl;
 	cout << "\t-c [param] \t- set the camera distance (float)." << endl;
 	cout << "\t-d [param] \t- set the voxel grid size (float)." << endl;
+	cout << "\t-s [param] \t- set a scale parameter for the output point set (float), default = 1.0." << endl;
 	cout << "\t-help \t- displays this help menu" << endl;
 
 	cout << "\nExample: SurfExtract ../data/modesl/engine_block.obj -o engine_block_pc.obj -c 4.5  -d=0.025\n" << endl;
@@ -124,6 +129,7 @@ void ArgParser::Display(void)
 	std::cout << "Output path:\t" << opt.output_path_filename << endl;
 	std::cout << "Voxel grid density : " << opt.voxel_grid_size << endl;
 	std::cout << "Camera distance radius: " << opt.camera_distance << endl;
+	std::cout << "Output scale: " << opt.output_scale << endl;
 	std::cout << "Image width:\t" << opt.image_width << endl;
 	std::cout << "Image height:\t" << opt.image_height << endl;
 	std::cout << "Wnd width:\t" << opt.windows_width << endl;

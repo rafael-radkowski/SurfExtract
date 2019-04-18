@@ -126,6 +126,15 @@ public:
 	bool done(void);
 
 
+	/*
+	Set the a scale parameter for the final point cloud.
+	The output point cloud will be scaled by this parameter
+	before written into a file.
+	@param scale - float value larger than 0.0001;
+	*/
+	bool setOutputScale(float scale);
+
+
 private:
 
 	/*

@@ -41,9 +41,10 @@ public:
 	Write the point cloud data to a file
 	@param file - string containing path and name
 	@param dst_points - vector of vector3f points containing x, y, z coordinates
-	@param dst_normals - vector of vector3f normal vectors index-aligned to the points
+	@param dst_normals - vector of vector3f normal vectors index-aligned to the points.
+	@param scale_points - float value > 0.0 that scales all points and normal vectors. 
 	*/
-	static bool Write(string file, vector<Eigen::Vector3f>* dst_points, vector<Eigen::Vector3f>* dst_normals);
+	static bool Write(string file, vector<Eigen::Vector3f>* dst_points, vector<Eigen::Vector3f>* dst_normals, float scale_points = 1.0f);
 };
 
 #endif

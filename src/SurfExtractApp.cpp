@@ -25,7 +25,7 @@ SurfExtractApp::SurfExtractApp()
 	_output_done = false;
 
 	_renderer = new GLRenderer();
-	_renderer->create(_window_width, _window_height, "Surface Extration");
+	_renderer->create(_window_width, _window_height, "Surface Extraction");
 	_renderer->addRenderFcn(std::bind(&SurfExtractApp::render_fcn, this, _1, _2));
 	_renderer->addKeyboardCallback(std::bind(&SurfExtractApp::keyboard_cb, this, _1, _2));
 
@@ -222,6 +222,21 @@ Ending must be obj.
 void SurfExtractApp::setOutputFilename(string path)
 {
 	_output_path = path;
+}
+
+
+/*
+Set the a scale parameter for the final point cloud.
+The output point cloud will be scaled by this parameter
+before written into a file.
+@param scale - float value larger than 0.001;
+*/
+bool SurfExtractApp::setOutputScale(float scale)
+{
+	if (!_pca) return false;
+		
+	_pca->setOutputScale(scale);
+	return true;
 }
 
 

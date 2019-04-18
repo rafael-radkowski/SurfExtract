@@ -149,11 +149,13 @@ bool LoaderObj::Read(string file, vector<Eigen::Vector3f >* dst_points, vector<E
 Write the point cloud data to a file
 @param file - string containing path and name
 @param dst_points - vector of vector3f points containing x, y, z coordinates
-@param dst_normals - vector of vector3f normal vectors index-aligned to the points
+@param dst_normals - vector of vector3f normal vectors index-aligned to the points.
+@param scale_points - float value > 0.0 that scales all points and normal vectors. 
 */
 //static
-bool LoaderObj::Write(string file, vector<Eigen::Vector3f>* dst_points, vector<Eigen::Vector3f>* dst_normals)
+bool LoaderObj::Write(string file, vector<Eigen::Vector3f>* dst_points, vector<Eigen::Vector3f>* dst_normals, float scale_points )
 {
+
 	std::ofstream outfile(file, std::ofstream::out);
 
     if(!outfile.is_open()){
@@ -172,12 +174,33 @@ bool LoaderObj::Write(string file, vector<Eigen::Vector3f>* dst_points, vector<E
 	outfile << "# Created by SurfExtract point cloud generation.\n";
 	outfile << "# Size: " << N << "\n\n";
 
+	Eigen::Matrix3f T = Eigen::Matrix3f::Identity();
+	T(0,0) = scale_points;
+	T(1,1) = scale_points;
+	T(2,2) = scale_points;
+
+	// inverse transpose
+	// not really required now. But we most likely rotate the object in future.
+	// so it should already be inside.
+	Eigen::Matrix3f Tit = (T.inverse()).transpose(); 
+
+	int inv_cout = 0; // counts invalid normal vectors 
 	for (int i = 0; i < N; i++) {
-		outfile << "v " << (*dst_points)[i][0] << " " << (*dst_points)[i][1] << " " << (*dst_points)[i][2] << "\n";
-		outfile << "vn " << (*dst_normals)[i][0] << " " << (*dst_normals)[i][1] << " " << (*dst_normals)[i][2] << "\n";
+
+		Eigen::Vector3f o_p =  T *(*dst_points)[i];
+		Eigen::Vector3f o_n =  Tit * (*dst_normals)[i];
+		o_n.normalize();
+
+	
+		if(o_n.norm() == 0.0){
+			inv_cout++;
+		}
+
+		outfile << "v " << o_p[0] << " " << o_p[1] << " " << o_p[2] << "\n";
+		outfile << "vn " << o_n[0] << " " << o_n[1] << " " << o_n[2] << "\n";
 	}
 
 	cout << "[INFO] - Saves " << N << " points and normal vectors to " <<  file.c_str() << "." << endl;
-
+	if(inv_cout > 0 ) cout << "[INFO] - " <<   inv_cout << " normal vector(s) invalid (0,0,0)" << endl;
 	outfile.close();
 }

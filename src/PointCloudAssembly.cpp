@@ -14,6 +14,8 @@ PointCloudAssembly::PointCloudAssembly() {
 	_user_param.grid_z = 0.005;
     _default_method = UNIFORM;
 
+	_output_scale = 1.0;
+
 	_m2p.setStride(1);
 }
 
@@ -38,6 +40,24 @@ void PointCloudAssembly::setPointCloudDensity(float density)
 	_user_param.grid_x = density;
 	_user_param.grid_y = density;
 	_user_param.grid_z = density;
+}
+
+
+/*
+Set the a scale parameter for the final point cloud.
+The output point cloud will be scaled by this parameter
+before written into a file.
+@param scale - float value larger than 0.0001;
+*/
+bool PointCloudAssembly::setOutputScale(float scale)
+{
+	if(scale < 0.0001){
+		cout << "[Error] - Scale parameter " << scale << "is to small. The minimum applicable value is 0.0001." << endl;
+		return false;
+	}
+
+	_output_scale = scale;
+	return true;
 }
 
 /*
@@ -113,7 +133,7 @@ Write the point cloud to an obj file
 */
 bool PointCloudAssembly::writeToFileOBJ(string path_and_filename)
 {
-	return LoaderObj::Write(path_and_filename, &_points_final.points, &_points_final.normals);
+	return LoaderObj::Write(path_and_filename, &_points_final.points, &_points_final.normals, _output_scale);
 }
 
 /*

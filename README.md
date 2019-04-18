@@ -33,12 +33,13 @@ Additinally, all code from my OpenGL utils folder is required:
 ### Usage
 Use command line arguments to configure the application; syntax:
 ```
-SurfExtract.exe [input_path_and_file.obj] -o [output_path_and_file.obj] -c [camera_distance] -d [voxel_grid_distance]
+SurfExtract.exe [input_path_and_file.obj] -o [output_path_and_file.obj] -c [camera_distance] -d [voxel_grid_distance] -s [uniform_scale]
 ```
 with
 * -o the output path and file. Currently, only .obj files are written.
 * -c the camera distance. Find a distance that covers your model size. 
 * -d uniform voxel grid size. This values determines the number of points. 
+* -s set a uniform scale parameter between 0.0001 < s < 10000.0 to scale the final point cloud (optional), default = 1.0
 
 Example:
 ```

@@ -62,24 +62,28 @@ void Mat2Normals::process(cv::Mat& mat, cv::Mat& dst_normals)
 				if (dir[0] && dir[2]) {
 					cv::Vec3f x = cross(p_r, p_d);
 					//if(isnan(x[0]) || isnan(x[1]) || isnan(x[2]))
+					if(length(x) > 0.0)
 						normal_vectors.push_back(x);
 				}	
 
 				if (dir[2] && dir[1]) {
 					cv::Vec3f x = cross(p_d, p_l);
 					//if (isnan(x[0]) || isnan(x[1]) || isnan(x[2]))
+					if(length(x) > 0.0)
 						normal_vectors.push_back(x);
 				}
 
 				if (dir[1] && dir[3]) {
 					cv::Vec3f x = cross(p_l, p_u);
 					//if (isnan(x[0]) || isnan(x[1]) || isnan(x[2]))
+					if(length(x) > 0.0)
 						normal_vectors.push_back(x);
 				}
 
 				if (dir[3] && dir[0]) {
 					cv::Vec3f x = cross(p_u, p_r);
 					//if (isnan(x[0]) || isnan(x[1]) || isnan(x[2]))
+					if(length(x) > 0.0)
 						normal_vectors.push_back(x);
 				}
 
@@ -91,7 +95,9 @@ void Mat2Normals::process(cv::Mat& mat, cv::Mat& dst_normals)
 				normal /=  float(normal_vectors.size());
 				normal = normalize(normal);
 
-				if(isnan(normal[0]) || isnan(normal[1]) || isnan(normal[2])) normal = cv::Vec3f(0,0,0);
+				if (isnan(normal[0]) || isnan(normal[1]) || isnan(normal[2])) {
+					normal = cv::Vec3f(0, 0, 0); 
+				}
 
 				dst_normals.at<cv::Vec3f>(i, j) = normal;
 				

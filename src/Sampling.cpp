@@ -87,13 +87,18 @@ void SamplingPointCloud::Uniform( PointCloud& src, PointCloud& dst, SamplingPara
 
     int count = 0;
     vector<Eigen::Vector3f> p_ = src.points;
+	vector<Eigen::Vector3f> n_ = src.normals;
     for( int i=0; i<size; i++){
 		float v = std::max((p_[i].x() + offset_x), 0.0f);
         int idx = ceil((p_[i].x() + offset_x) / voxX );
         int idy = ceil((p_[i].y() + offset_y) / voxY );
         int idz = ceil((p_[i].z() + offset_z) / voxZ );
 
-        if(cube[idx][idy][idz] == -1)
+		float len = n_[i].norm();
+		// some invalid normals are of length 0.0. They get ignored. 
+		// Usually, they are better normals from a different view. 
+
+        if(cube[idx][idy][idz] == -1 && len > 0.0)
         {
             cube[idx][idy][idz] = i;
             count++;

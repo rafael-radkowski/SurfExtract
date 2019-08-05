@@ -50,3 +50,11 @@ Example:
 * The .obj model input requires an mtl material file. Otherwise, the obj loader does not process the file. Create an empty one if you do not have one.
 * Mind your model size. The default camera is quite close. So if your model vertex values are huge, you might end up inside the model. This will be changed in future. 
 * Some error messages appear at the beginning. IGNORE THEM.
+
+
+### Binary Versions
+A binary version pre-compiled for Windows 10 is available on DropBox
+#### Version V1.0-190425
+* [Link](https://www.dropbox.com/sh/npenx0m40lyjx46/AAA3Gpv0HK-AxPzqTPi0U4DAa?dl=0&lst=)
+* Comes with all basic features as described above. 
+

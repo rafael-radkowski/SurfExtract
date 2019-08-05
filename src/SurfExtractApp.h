@@ -149,9 +149,12 @@ private:
 
 	//------------------------------------------------------
 	// members
+protected:
 
 	// opengl main renderer
 	GLRenderer*			_renderer;
+
+
 
 	// 3d model of the object to be rendered
 	cs557::OBJModel*		_model;
@@ -159,6 +162,8 @@ private:
 	//  light for the model
 	cs557::LightSource	_light0;
 	cs557::LightSource	_light1;
+
+private:
 
 	// image and window width / height
 	int						_image_width; 

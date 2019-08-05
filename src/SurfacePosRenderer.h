@@ -1,5 +1,19 @@
 #pragma once
+/*
+class SurfacePosRenderer
 
+The class renders the fragement positions of a 3d model into a 32-bit frame buffer object (fbo). 
+All points are stored in local object space. 
+Use 'draw' to start rendering the current frame from the current camera position.
+The output is avaialble as opencv Mat of type CV_32FC3 using getCurrData().
+Optionally, the output can be stored to a png image. 
+
+Rafael Radkowski
+Iowa State University
+rafael@iastate.edu
+March 2019
+MIT License
+*/
 
 #include <iostream>
 #include <string>

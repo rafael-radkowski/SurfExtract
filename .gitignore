@@ -16,3 +16,6 @@ src/SurfExtract.dir/
 dep
 x64/
 *.user
+SurfExtractGui/obj/Debug/SurfExtractGui.Properties.Resources.resources
+SurfExtractGui/Properties/
+SurfExtractGui/obj/

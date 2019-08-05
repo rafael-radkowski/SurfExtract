@@ -1,6 +1,27 @@
 #ifndef __SAMPLING__
 #define __SAMPLING__
+/*
+class Sampling
 
+The class provides functions to change the density of a point cloud by uniformly sample all provided points. 
+
+Currently, only uniform sampling is supported, method Uniform.
+The function calculates the max. expansion of the point cloud and allocates a uniform voxel grid, each voxel 
+has the user-specified edge length grid_x, which can be set via the sampling parameters. 
+
+- To assign a point cloud point to a voxel, each point's position is divided by the grid size.
+This results in an integer, which indicates the voxel id. The point id - its index in the point vector - is stored in the voxel. 
+- Note that all voxels are allocated with a value -1. Point ids are only stored in a voxel as long as the id is -1.
+  Once a voxel is occupied, no new point will be stored. First comes first serves. Thus, no duplicates
+  neither point coordinates nor normal vectors are merged.
+- Points with invalid normal vectors (length != 1.0) are ignored.
+
+Rafael Radkowski
+Iowa State University
+rafael@iastate.edu
+March 2019
+MIT License
+*/
 
 //stl
 #include <iostream>

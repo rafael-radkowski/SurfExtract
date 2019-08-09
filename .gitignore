@@ -19,3 +19,8 @@ x64/
 SurfExtractGui/obj/Debug/SurfExtractGui.Properties.Resources.resources
 SurfExtractGui/Properties/
 SurfExtractGui/obj/
+src/SurfExtractLib.dir/
+mfc/
+SurfExtractGui/
+src/Debug/
+src/Release/

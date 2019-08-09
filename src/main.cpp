@@ -59,11 +59,12 @@ int main(int argc, char** argv) {
 	}
 
 	cout << "SurfExtract" << endl;
+	cout << "Version 1.1" << endl;
 	cout << "Extract a point cloud from all visible surfaces and ignore hidden surfaces\n" << endl;
 	cout << "Rafael Radkowski" << endl;
 	cout << "rafael@iastate.edu" << endl;
 	cout << "Iowa State University" << endl;
-	cout << "March 2019" << endl;
+	cout << "August 2019" << endl;
 	cout << "MIT License\n\n" << endl;
 
 

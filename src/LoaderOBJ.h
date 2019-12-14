@@ -1,6 +1,18 @@
 #ifndef __LOADER_OBJ__
 #define __LOADER_OBJ__
 
+/*
+
+
+---------------------------------------------------
+Last edits:
+
+Dec 14, 2019, RR:
+- Set the output to a fixed length to prevent scientific notation. Some other applications
+  crash with the e as part of the number.
+
+*/
+
 
 #include <vector>
 #include <iostream>

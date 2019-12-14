@@ -22,7 +22,7 @@ namespace nsGLPointCloudRenderer
 		"{                                                                 \n"
 		"    gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(in_Position, 1.0);  \n"
 		"    pass_Color = in_Normal;                                         \n"
-		"	gl_PointSize = 2.0;												\n"	
+		"	 gl_PointSize =3.0;												\n"	
 		"}                                                                 \n";
 
 	// Fragment shader source code. This determines the colors in the fragment generated in the shader pipeline. In this case, it colors the inside of our triangle specified by our vertex shader.
@@ -142,6 +142,8 @@ void GLPointCloudRenderer::draw(glm::mat4 projectionMatrix, glm::mat4 viewMatrix
 	_viewMatrix = viewMatrix;
 
 	if (_block) return;
+
+	glEnable( GL_PROGRAM_POINT_SIZE );
 
     // Enable the shader program
 	glUseProgram(program);

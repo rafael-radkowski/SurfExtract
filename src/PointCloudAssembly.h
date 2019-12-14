@@ -9,6 +9,12 @@ rafael@iastate.edu
 +1 (515) 294 7044
 March 4, 2019
 All copyrights reserved
+
+--------------------------------------------------------------------
+Last edits:
+
+Dec 14, 2019, RR:
+- Added a function to set the minimum allowed point cloud density. This can prevent low performance. 
 */
 
 #include <iostream>
@@ -104,6 +110,20 @@ public:
 	*/
 	int getNumPoints(void);
 
+
+	/*
+	Set the minimum allowed point cloud density.
+	This value can be calcualted in advance when knowing the 
+	number of voxels. It will prevent that the applications crashs
+	@param denisty  - float with the minimum allowed density;
+	*/
+	bool setMinimumPointCloudDensity(float density);
+
+	/*
+	Return the minimum point cloud density
+	*/
+	float getMinimumPointCloudDensity(void);
+
 private:
 
 	// converts the data matrix into points
@@ -125,6 +145,7 @@ private:
 	SamplingParam				_default_param;
     SamplingMethod				_default_method;
 	SamplingParam				_user_param;
+	float						_min_density;
  
 	float						_output_scale;
 

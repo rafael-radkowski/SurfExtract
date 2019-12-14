@@ -33,7 +33,7 @@ bool GLRenderer::create(int window_width, int window_height, string name)
 	_window_width = window_width;
 	_window_height = window_height;
 
-	_projMatrix = glm::perspective(1.2f, (float)window_width / (float)window_height, 0.1f, 100.f);
+	//_projMatrix = glm::perspective(1.2f, (float)window_width / (float)window_height, 0.1f, 1000.f);
 
 	
 	// Init the GLFW Window and glew
@@ -69,6 +69,7 @@ void GLRenderer::draw_loop(void)
     glEnable(GL_DEPTH_TEST); 
     glEnable(GL_BLEND); 
 	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+	glEnable( GL_PROGRAM_POINT_SIZE );
 
 	 // Init the view matrix. 
     cs557::InitControlsViewMatrix(_viewMatrix);
@@ -123,6 +124,16 @@ bool  GLRenderer::setViewMatrix(glm::mat4 vm)
 	 // Init the view matrix. 
     cs557::InitControlsViewMatrix(_viewMatrix);
 
+	return true;
+}
+
+/*
+Set a projection matrix 
+@param pm - 4x4 view matrix
+*/
+bool GLRenderer::setProjectionMatrix(glm::mat4 pm)
+{
+	_projMatrix = pm;
 	return true;
 }
 

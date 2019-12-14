@@ -38,6 +38,7 @@ Last edits:
 // local
 #include "SurfExtractApp.h"
 #include "ArgParser.h"
+#include "GeometryCheckup.h"
 
 
 int						_image_width = 1024; 
@@ -50,7 +51,6 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-
 	arlab::Arguments arg = arlab::ArgParser::Parse(argc,argv);
 
 	if (!arg.valid) {
@@ -59,12 +59,12 @@ int main(int argc, char** argv) {
 	}
 
 	cout << "SurfExtract" << endl;
-	cout << "Version 1.1" << endl;
+	cout << "Version 1.1.1" << endl;
 	cout << "Extract a point cloud from all visible surfaces and ignore hidden surfaces\n" << endl;
 	cout << "Rafael Radkowski" << endl;
 	cout << "rafael@iastate.edu" << endl;
 	cout << "Iowa State University" << endl;
-	cout << "August 2019" << endl;
+	cout << "December 2019" << endl;
 	cout << "MIT License\n\n" << endl;
 
 
@@ -80,14 +80,14 @@ int main(int argc, char** argv) {
 	cout << "2 \t enable/disable point cloud rendering" << endl;
 	cout << "3 \t enable/disable normal vector rendering (after all points are done)" << endl;
 	cout << "------------------------------------------------------------------------" << endl;
-	cout << "IGNORE THE MATERIAL WARNIGS\n\n" << endl;
+	cout << "\nIGNORE THE MATERIAL WARNINGS\n\n" << endl;
 
 
 	SurfExtractApp* sea = new SurfExtractApp();
+	sea->setVerbose(arg.verbose);
 	sea->loadModel(arg.model_path_and_file);
 	sea->setCameraDistance(arg.camera_distance);
 	sea->setPointCloudDensity(arg.voxel_grid_size);
-	sea->setVerbose(arg.verbose);
 	sea->setOutputScale(arg.output_scale);
 	sea->setOutputFilename(arg.output_path_filename);
 

@@ -21,6 +21,11 @@ Iowa State University
 rafael@iastate.edu
 March 2019
 MIT License
+------------------------------------------------------------------------------------------------------
+Last edits:
+
+Dec 14, 2019, RR:
+- Added a warning that pops up if the number of voxels exceeds 1000. To may voxel need too much memory. S
 */
 
 //stl

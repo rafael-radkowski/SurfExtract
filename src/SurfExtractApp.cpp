@@ -16,7 +16,10 @@ SurfExtractApp::SurfExtractApp()
 	_enable_render_normals = false;
 	_show_normals = false;
 	_pview_camera_distance = 3.5;
+	_pview_camera_distance_user_value = false;
 	_pview_sub = 1;
+
+	_temp_model_path = "temp_model.obj";
 
 	_pca = NULL;
 	_gl_pc = NULL;
@@ -47,6 +50,8 @@ SurfExtractApp::SurfExtractApp()
 
 SurfExtractApp::~SurfExtractApp()
 {
+	
+
 	delete _gl_pc;
 	delete _pca;
 	delete _pview;
@@ -60,10 +65,35 @@ Load the 3D model from a file
 */
 bool SurfExtractApp::loadModel(string path_to_file)
 {
+	
+	// precheck the model
+	_geometry_check.setVerbose(_verbose);
+	bool ret = _geometry_check.loadObj(path_to_file);
+	if (!ret) {
+		return false;
+	}
+
+	// the geometry object writes its own model to a file in _temp_model_path.
+	// the tools uses this new temp model to extract the surface point cloud. 
+	ret = _geometry_check.processObj(path_to_file, _temp_model_path);
+	if (!ret) {
+		cout << "[CRITICAL ERROR] - Something went wrong when pre-processing the model " << path_to_file << "." << endl;
+		return false;
+	}
+
+	// set the maximum camera distance. Note that the user can overwrite this value.
+	autoSetCameraDistance();
+
+	// set the minimum point cloud density
+	// The function calculates the minimum density that will prevent crashing.
+	_pca->setMinimumPointCloudDensity(_geometry_check.computeMinVoxelDensity());
+	
+
 	// load the 3d model
+	// This model is only set to have a visual model on display. 
 	unsigned int program = cs557::LoadAndCreateShaderProgram("lit_scene.vs", "lit_scene.fs");
 	_model = new cs557::OBJModel();
-	_model->create(path_to_file, program);
+	_model->create(_temp_model_path, program);
 	_model->setModelMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)));
 
 	_light0.pos = glm::vec3(0.0f, 5.0f, 3.0f);
@@ -71,6 +101,7 @@ bool SurfExtractApp::loadModel(string path_to_file)
 	_light0.k1 = 0.1;
 	_light0.intensity = 1.7;
 	_light0.index = 0;
+	_light0.error_count = 10; // to prevent error messages
 	_light0.apply(_model->getProgram());
 
 	_light1.pos = glm::vec3(0.0f, 5.0f, -3.0f);
@@ -78,10 +109,12 @@ bool SurfExtractApp::loadModel(string path_to_file)
 	_light1.k1 = 0.1;
 	_light1.intensity = 1.0;
 	_light1.index = 1;
+	_light1.error_count = 10; // to prevent error messages
 	_light1.apply(_model->getProgram());
 
 	// set model to be rendered
-	_pview->setModelFromFile(path_to_file);
+	// This model is used to extract the point cloud.
+	_pview->setModelFromFile(_temp_model_path);
 
 	return true;
 }
@@ -128,11 +161,42 @@ void SurfExtractApp::setCameraDistance(float distance)
 	if (distance < 0.1) return ;
 
 	_pview_camera_distance = distance;
+	_pview_camera_distance_user_value = true;
 
 	glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0, _pview_camera_distance), glm::vec3(0.0f, 0.0f, 00.f), glm::vec3(0.0f, 1.0f, 0.0f));
 	if (_renderer)
 		_renderer->setViewMatrix(viewMatrix);
 }
+
+/*
+Set the camera distance automatically. 
+Note that this function requires a model loaded. 
+Also, it wil not work anymore as soon as the function setCameraDistance was called by a user. 
+*/
+void SurfExtractApp::autoSetCameraDistance(void)
+{
+	if(_pview_camera_distance_user_value) return;
+
+	float bbedge = _geometry_check.getMaxBBEdge();
+	float camera_multiplier = 1.75f;
+
+	if(bbedge > 100.0) camera_multiplier = 1.4f;
+		
+	_pview_camera_distance = bbedge * camera_multiplier;
+
+	if (_pview_camera_distance < 0.1) return ;
+
+	glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0, _pview_camera_distance), glm::vec3(0.0f, 0.0f, 00.f), glm::vec3(0.0f, 1.0f, 0.0f));
+	if (_renderer){
+		_renderer->setViewMatrix(viewMatrix);
+
+		cout << "[INFO] - Set the camera distance to an auto value of c = " << _pview_camera_distance << endl;
+
+		glm::mat4 projMatrix = glm::perspective(1.2f, (float)_window_width / (float)_window_height, 0.1f, _pview_camera_distance * 1.5f);
+		_renderer->setProjectionMatrix(projMatrix);
+	}
+}
+
 
 
 /*
@@ -168,7 +232,12 @@ Must be >= 0.005
 */
 void SurfExtractApp::setPointCloudDensity(float density)
 {
-	if (!_pca)return;
+	if (!_pca){
+		if (_verbose) {
+			cout << "[CRITICAL ERROR] - _pca not ready (setPointCloudDensity)." << endl;
+		}
+		return;
+	}
 
 	_pca->setPointCloudDensity(density);
 	
@@ -270,7 +339,7 @@ void SurfExtractApp::keyboard_cb(int key, int action)
 			else this->showPointCloud(true);				
 			break;
 		case 82: //r
-			cout << "[Input] - Enter density (0.005 < x < 1.0), current: " << _pca->getPointCloudDensity() << " (press enter) \n";
+			cout << "[Input] - Enter density (" << _pca->getMinimumPointCloudDensity() << " < x < " << _geometry_check.getMaxBBEdge()  << "= no change), current: " << _pca->getPointCloudDensity() << " (press enter) \n";
 			float density;
 			std::cin >> density;
 			resample(density);
@@ -294,3 +363,4 @@ void SurfExtractApp::keyboard_cb(int key, int action)
 
 
 }
+

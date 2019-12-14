@@ -114,6 +114,7 @@ bool SurfacePosRenderer::prepareHelpers(void)
 	_sphere_mat.specular_int = 0.5;
 	_sphere_mat.specular_mat = glm::vec3(1.0, 1.0, 1.0);
 	_sphere_mat.specular_s = 2.0;
+	_sphere_mat.error_count = 10;
 	_sphere_mat.apply(_sphere->getProgram());
 
 	_light0.apply(_sphere->getProgram());

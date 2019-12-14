@@ -69,10 +69,16 @@ void SamplingPointCloud::Uniform( PointCloud& src, PointCloud& dst, SamplingPara
     int vz = std::ceil ( dimZ / voxZ );
 
     if(g_verbose){
-        cout << "[SamplingPointCloud] - Num cells Vx: " << vx << endl;
-        cout << "[SamplingPointCloud] - Num cells Vy: " << vy << endl;
-        cout << "[SamplingPointCloud] - Num cells Vz: " << vz << endl;
+        cout << "[Sampling] - Num cells Vx: " << vx << ",(dx: " << voxX << ")." << endl;
+        cout << "[Sampling] - Num cells Vy: " << vy << ",(dy: " << voxY << ")." << endl;
+        cout << "[Sampling] - Num cells Vz: " << vz << ",(dz: " << voxZ << ")." << endl;
     }
+
+	if (vx > 1000 || vy > 1000 || vz > 1000) {
+		  cout << "[WARNING] - Num of grid cells exceed recommended maximum." << endl;
+		  cout << "[WARNING] - nx: " << vx << ", ny: " << vy << ", nz: " << vz << endl;
+		  cout << "[WARNING] - Increase the grid size or reduce the model. Performance may be low otherwise." << endl;
+	}
 
 
     //--------------
@@ -106,7 +112,7 @@ void SamplingPointCloud::Uniform( PointCloud& src, PointCloud& dst, SamplingPara
     }
 
     if(g_verbose){
-        cout << "[SamplingPointCloud] - Downsampled form " << src.N << " to " << count << " points. " << endl;
+        cout << "[Sampling] - Downsampled form " << src.N << " to " << count << " points. " << endl;
     }
     dst.points.resize(count);
     dst.normals.resize(count);
@@ -132,7 +138,7 @@ void SamplingPointCloud::Uniform( PointCloud& src, PointCloud& dst, SamplingPara
     }
 
     if(g_verbose){ 
-        cout << "[SamplingPointCloud] - Output contains " << i << " points and normals. "  << endl;
+        cout << "[Sampling] - Output contains " << i << " points and normals. "  << endl;
     }
 }
 

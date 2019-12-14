@@ -1,4 +1,14 @@
 #pragma once
+/*
+
+
+----------------------------------------------------------
+Last edits:
+
+Dec 14, 2019, RR:
+- Added a api to set the projection matrix. 
+
+*/
 
 
 #include <iostream>
@@ -64,6 +74,13 @@ public:
 	@param vm - 4x4 view matrix
 	*/
 	bool setViewMatrix(glm::mat4 vm);
+
+
+	/*
+	Set a projection matrix 
+	@param pm - 4x4 view matrix
+	*/
+	bool setProjectionMatrix(glm::mat4 pm);
 
 	/*
 	Start the renderer

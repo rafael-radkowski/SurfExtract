@@ -4,15 +4,18 @@
 PointCloudAssembly::PointCloudAssembly() {
 
 	_verbose = false;
+	_min_density = 0.005f;
 
-	_default_param.grid_x = 0.005;
-	_default_param.grid_y = 0.005;
-	_default_param.grid_z = 0.005;
+	_default_param.grid_x = _min_density;
+	_default_param.grid_y = _min_density;
+	_default_param.grid_z = _min_density;
 
-	_user_param.grid_x = 0.005;
-	_user_param.grid_y = 0.005;
-	_user_param.grid_z = 0.005;
+	_user_param.grid_x = _min_density;
+	_user_param.grid_y = _min_density;
+	_user_param.grid_z = _min_density;
     _default_method = UNIFORM;
+
+	
 
 	_output_scale = 1.0;
 
@@ -31,8 +34,8 @@ defined via the sampling grid size
 */
 void PointCloudAssembly::setPointCloudDensity(float density)
 {
-	if (density < 0.005) {
-		cout << "[ERROR] - The point cloud density is currently limited to 0.005 in function setPointCloudDensity." << endl;
+	if (density < _min_density) {
+		cout << "[ERROR] - The point cloud density is currently limited to " << _min_density << " in function setPointCloudDensity." << endl;
 		cout << "[ERROR] - Change the code or scale your model. However, the change will affect the runtime and memory requirements." << endl;
 		return;
 	}
@@ -40,6 +43,44 @@ void PointCloudAssembly::setPointCloudDensity(float density)
 	_user_param.grid_x = density;
 	_user_param.grid_y = density;
 	_user_param.grid_z = density;
+}
+
+/*
+Set the minimum allowed point cloud density.
+This value can be calcualted in advance when knowing the 
+number of voxels. It will prevent that the applications crashs
+@param denisty  - float with the minimum allowed density;
+*/
+bool PointCloudAssembly::setMinimumPointCloudDensity(float density)
+{
+	if (density < 0.004999) { // to prevent rounding issues
+		cout << density << endl;
+		cout << "[ERROR] - The minimum point cloud density is currently limited to 0.005 in function setPointCloudDensity." << endl;
+		cout << "[ERROR] - Change the code or scale your model. However, the change will affect the runtime and memory requirements." << endl;
+		return false;
+	}
+
+	_min_density = density;
+
+	_default_param.grid_x = _min_density;
+	_default_param.grid_y = _min_density;
+	_default_param.grid_z = _min_density;
+
+	if (_user_param.grid_x < _min_density) {
+		_user_param.grid_x = _min_density;
+		_user_param.grid_y = _min_density;
+		_user_param.grid_z = _min_density;
+	}
+
+	return true;
+}
+
+/*
+Return the minimum point cloud density
+*/
+float PointCloudAssembly::getMinimumPointCloudDensity(void)
+{
+	return _min_density;
 }
 
 

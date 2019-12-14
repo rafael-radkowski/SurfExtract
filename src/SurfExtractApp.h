@@ -13,6 +13,10 @@ MIT License
 ---------------------------------------------------
 Last edits:
 
+Dec 14, 2019, RR:
+- Added a class GeometryCheckup to set the model to its centroid and to determine the bounding box. 
+- Added a function to automatically set the camera distance if the user does not overwrite the value. 
+
 */
 
 #include <iostream>
@@ -37,6 +41,7 @@ Last edits:
 // glfw includes
 #include <GLFW/glfw3.h>
 
+
 // local
 #include "GLRenderer.h"
 #include "ModelOBJ.h"
@@ -44,6 +49,7 @@ Last edits:
 #include "PointCloudAssembly.h"
 #include "GLPointCloudRenderer.h"
 #include "GLNormalsRenderer.h"
+#include "GeometryCheckup.h"
 
 using namespace std::placeholders;
 using namespace std;
@@ -147,6 +153,12 @@ private:
 	*/
 	void keyboard_cb(int key, int action);
 
+	/*
+	Set the camera distance automatically. 
+	*/
+	void autoSetCameraDistance(void);
+
+
 	//------------------------------------------------------
 	// members
 protected:
@@ -157,6 +169,8 @@ protected:
 
 
 	// 3d model of the object to be rendered
+	// this model only shows the 3D model in the display. It is not used for 
+	// point cloud extraction. _pview gets its own model. 
 	cs557::OBJModel*		_model;
 
 	//  light for the model
@@ -177,6 +191,7 @@ private:
 	bool					_pview_start; // indicates that the model was created and that the renders is ready to go
 
 	float					_pview_camera_distance;
+	bool					_pview_camera_distance_user_value; // saves whether the user set a value. The automatic bb measurement will not overwrite the value in this case
 	int						_pview_sub;
 
 	// point cloud assembly tool
@@ -186,15 +201,19 @@ private:
 	GLPointCloudRenderer*	_gl_pc;
 	GLNormalsRenderer*		_gl_normals;
 
-	bool						_enable_render_3d;
-	bool						_enable_render_points;
-	bool						_enable_render_normals; // to enable the normal vector renderer automatically after all points are done
-	bool						_show_normals; // to allow the user to enable and disable the normal renderer
-	bool						_verbose;
+	bool					_enable_render_3d;
+	bool					_enable_render_points;
+	bool					_enable_render_normals; // to enable the normal vector renderer automatically after all points are done
+	bool					_show_normals; // to allow the user to enable and disable the normal renderer
+	bool					_verbose;
 
 	bool					_output_done;
 	string					_output_path;
 
+	// functions to check the geometry and to adapt the model if neceesary
+	GeometryCheckup			_geometry_check;
 
-
+	// the file works with a temporary model.
+	// the variable stores its name.
+	std::string				_temp_model_path;
 };

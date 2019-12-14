@@ -196,8 +196,8 @@ bool LoaderObj::Write(string file, vector<Eigen::Vector3f>* dst_points, vector<E
 			inv_cout++;
 		}
 
-		outfile << "v " << o_p[0] << " " << o_p[1] << " " << o_p[2] << "\n";
-		outfile << "vn " << o_n[0] << " " << o_n[1] << " " << o_n[2] << "\n";
+		outfile << std::fixed << "v " << o_p[0] << " " << o_p[1] << " " << o_p[2] << "\n";
+		outfile << std::fixed << "vn " << o_n[0] << " " << o_n[1] << " " << o_n[2] << "\n";
 	}
 
 	cout << "[INFO] - Saves " << N << " points and normal vectors to " <<  file.c_str() << "." << endl;

@@ -44,7 +44,9 @@ typedef struct _Arguments
 		image_width = 1024;
 		image_height = 1024;
 
-		camera_distance = 1.3;
+		// note that the default value = 0.0 disables the argument value. 
+		// in this case, the value is set using the bounidng box size
+		camera_distance = 0.0; 
 		voxel_grid_size = 0.04;
 		output_scale = 1.0;
 

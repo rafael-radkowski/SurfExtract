@@ -105,7 +105,7 @@ void ArgParser::Help(void)
 	cout << "\t-o [param] - set the output path" << endl;
 	cout << "\t-c [param] \t- set the camera distance (float)." << endl;
 	cout << "\t-d [param] \t- set the voxel grid size (float)." << endl;
-	cout << "\t-s [param] \t- set a scale parameter for the output point set (float), default = 1.0." << endl;
+	cout << "\t-s [param] \t- set a scale parameter for the output point set (float), default = 0.0." << endl;
 	cout << "\t-help \t- displays this help menu" << endl;
 
 	cout << "\nExample: SurfExtract ../data/modesl/engine_block.obj -o engine_block_pc.obj -c 4.5  -d=0.025\n" << endl;
@@ -128,7 +128,8 @@ void ArgParser::Display(void)
 	std::cout << "Model:\t" << opt.model_path_and_file << endl;
 	std::cout << "Output path:\t" << opt.output_path_filename << endl;
 	std::cout << "Voxel grid density : " << opt.voxel_grid_size << endl;
-	std::cout << "Camera distance radius: " << opt.camera_distance << endl;
+	if(opt.camera_distance == 0)std::cout << "Camera distance radius: auto" << endl;
+	else std::cout << "Camera distance radius: " << opt.camera_distance << endl;
 	std::cout << "Output scale: " << opt.output_scale << endl;
 	std::cout << "Image width:\t" << opt.image_width << endl;
 	std::cout << "Image height:\t" << opt.image_height << endl;

@@ -19,6 +19,8 @@ Dec 14, 2019, RR:
 Dec 14, 2019, RR:
 - Addated all savetoFile functions to accomodate changes in PointCloudAssembly: the file type is an arguement.
 - Added a ply file writer. The user gets two files now. 
+Dec 15, 2019, RR
+- Added a function to check and create the output folder if it does not exist.
 */
 
 #include <iostream>
@@ -52,6 +54,7 @@ Dec 14, 2019, RR:
 #include "GLPointCloudRenderer.h"
 #include "GLNormalsRenderer.h"
 #include "GeometryCheckup.h"
+#include "FileUtils.h"
 
 using namespace std::placeholders;
 using namespace std;
@@ -168,6 +171,11 @@ private:
 	*/
 	void rewrite_obj_gfx(void);
 
+	/*
+	The function checks the output path and 
+	creates it if it does not exist. 
+	*/
+	void check_output_path(std::string path);
 
 	//------------------------------------------------------
 	// members

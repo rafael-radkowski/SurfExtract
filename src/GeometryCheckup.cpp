@@ -479,6 +479,8 @@ bool GeometryCheckup::processMtlFile(std::string path_and_file_3d_model, std::st
 	new_mtllib_name = output_path_and_file.substr(idx, idx2 - idx );
 	new_mtllib_name.append(".mtl");
 
+	if(new_mtllib_name[0] == '/') new_mtllib_name.erase(0,1);
+
 	_new_mtllib_file = new_mtllib_name;
 
 	if(idx > 0)

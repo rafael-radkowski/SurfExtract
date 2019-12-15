@@ -278,6 +278,8 @@ bool SurfExtractApp::saveToObj(string path)
 {
 	if (!_pca)return false;
 
+	check_output_path(path);
+
 	_output_path = path;
 	return _pca->writeToFile(path, "obj");
 }
@@ -298,6 +300,7 @@ Ending must be obj.
 */
 void SurfExtractApp::setOutputFilename(string path)
 {
+	check_output_path(path);
 	_output_path = path;
 }
 
@@ -383,4 +386,28 @@ void SurfExtractApp::rewrite_obj_gfx(void)
 	path.append("_gfx.obj");
 
 	_geometry_check.writeObj(path, _pca->getOutputScale());
+}
+
+
+/*
+The function checks the output path and 
+creates it if it does not exist. 
+*/
+void SurfExtractApp::check_output_path(std::string path)
+{
+	int idx0 = path.find_last_of("/");
+	if (idx0 == -1) {
+		idx0 =  path.find_last_of("\\");
+	}
+
+	// no path given, we save in the workpath 
+	if (idx0 == -1) return;
+
+	std::string sub_path = path.substr(0,idx0);
+
+	if(!FileUtils::Exists(sub_path))
+	{
+		FileUtils::CreateDirectories(sub_path);
+	}
+
 }

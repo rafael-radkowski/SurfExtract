@@ -56,4 +56,7 @@ add_library(${PROJECT_NAME}Lib SHARED  ${Dll_src} )
 
 
 # Add libraries
-target_link_libraries(${PROJECT_NAME}Lib   ${GLEW_LIBRARIES} ${GLEW_LIBRARY} ${GLFW3_LIBRARY} ${OPENGL_LIBRARIES}  ${OPENCV_LIBRARIES}  ${GLSupport} )
+target_link_libraries(${PROJECT_NAME}Lib   ${GLEW_LIBRARIES} ${GLEW_LIBRARY} ${GLFW3_LIBRARY} ${OPENGL_LIBRARIES} ${OPENCV_LIBRARIES}  ${GLSupport} )
+
+# add subdirectory
+add_subdirectory(tests)

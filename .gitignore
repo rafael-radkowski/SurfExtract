@@ -24,3 +24,5 @@ mfc/
 SurfExtractGui/
 src/Debug/
 src/Release/
+src/tests/tests.dir/
+src/tests/testcase0.ply

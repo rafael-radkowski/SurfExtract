@@ -38,14 +38,14 @@ bool ReaderWriterPLY::Read(const std::string file, std::vector<Eigen::Vector3f>&
 	std::string str;
     while(std::getline(infile, str))
     {
-		std::vector<string> e = ReaderWriter::split(str, ',');
+		std::vector<string> e = ReaderWriter::split(str, ' ');
 		if(e.size() == 0) continue;
 
 		if (!found_data) {
 	
-			if (e[0].compare("element")) {
+			if (e[0].compare("element") == 0) {
 				if (e.size() == 3) {
-					if (e[1].compare("vertex")) {
+					if (e[1].compare("vertex") == 0) {
 						string s = e[2];
 						if(ReaderWriter::is_number(s))
 						{
@@ -58,7 +58,7 @@ bool ReaderWriterPLY::Read(const std::string file, std::vector<Eigen::Vector3f>&
 					}
 				}
 			}
-			else if (e[0].compare("end_header")) {
+			else if (e[0].compare("end_header") == 0) {
 				found_data = true;
 			}
 		}
@@ -89,6 +89,9 @@ bool ReaderWriterPLY::Read(const std::string file, std::vector<Eigen::Vector3f>&
 				if(ReaderWriter::is_number(e[5]))
 					nz = std::atof(e[5].c_str());
 				else ErrorMsg("coordinate nz is NaN at vertex " + std::to_string(count));
+
+				dst_points.push_back(Eigen::Vector3f(x, y, z));
+				dst_normals.push_back(Eigen::Vector3f(nx, ny, nz));
 
 				count++;
 			}

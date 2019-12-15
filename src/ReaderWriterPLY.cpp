@@ -161,15 +161,24 @@ bool ReaderWriterPLY::Write(std::string file, std::vector<Eigen::Vector3f>& src_
 	of << "property float nz\n";
 	of << "end_header\n";
 
+	Eigen::Matrix3f T = Eigen::Matrix3f::Identity();
+	T(0,0) = scale_points;
+	T(1,1) = scale_points;
+	T(2,2) = scale_points;
+	Eigen::Matrix3f Tit = (T.inverse()).transpose(); 
+
 
 
 	for (int i = 0; i < size; i++) {
 
 		Eigen::Vector3f p = src_points[i];
 		Eigen::Vector3f n = src_normals[i];
+
+		Eigen::Vector3f o_p =  T * p;
+		Eigen::Vector3f o_n =  Tit * n;
 				
 		if (p[0] || p[1] || p[2]) {
-			of << scale_points * p.x() << " " << scale_points * p.y() << " " << scale_points * p.z() << " "  << n.x() << " " << n.y() << " " << n.z() << "\n";
+			of << std::fixed << scale_points * o_p.x() << " " << scale_points * o_p.y() << " " << scale_points * o_p.z() << " "  << o_n.x() << " " << o_n.y() << " " << o_n.z() << "\n";
 		}
 	}
 	of.close();

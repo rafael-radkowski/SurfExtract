@@ -143,6 +143,7 @@ public:
 	bool setOutputScale(float scale);
 
 
+
 private:
 
 	/*
@@ -159,6 +160,13 @@ private:
 	Set the camera distance automatically. 
 	*/
 	void autoSetCameraDistance(void);
+
+	/*
+	The function rewrites the adapted obj file
+	and creates an output file with a scale that matches the user set 
+	scale and path. 
+	*/
+	void rewrite_obj_gfx(void);
 
 
 	//------------------------------------------------------

@@ -101,6 +101,16 @@ bool PointCloudAssembly::setOutputScale(float scale)
 	return true;
 }
 
+
+
+/*
+Return the output scale as float
+*/
+float PointCloudAssembly::getOutputScale(void)
+{
+	return _output_scale;
+}
+
 /*
 Add a data matrix to the current point cloud and invoke processing
 The matrix needs to be of type CV_32F_C3 with width x height x 3, 

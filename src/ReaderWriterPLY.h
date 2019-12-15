@@ -16,7 +16,9 @@ MIT License
 ------------------------------------------------------------------------------------------------------
 Last edits:
 
-
+Dec 15, 2019, RR
+- Added a function to scale the outgoing object. 
+- Changed the output to fixed length values
 */
 // stl
 #include <iostream>

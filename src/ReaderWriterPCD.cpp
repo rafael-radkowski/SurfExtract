@@ -78,7 +78,7 @@ bool ReaderWriterPCD::Write(std::string file, std::vector<Eigen::Vector3f>& src_
 		Eigen::Vector3f n = src_normals[i];
 				
 		if (p[0] || p[1] || p[2]) {
-			of << scale_points * p.x() << " " << scale_points * p.y() << " " << scale_points * p.z() << " "  << n.x() << " " << n.y() << " " << n.z() << "\n";
+			of << std::fixed << scale_points * p.x() << " " << scale_points * p.y() << " " << scale_points * p.z() << " "  << n.x() << " " << n.y() << " " << n.z() << "\n";
 		}
 	}
 	of.close();

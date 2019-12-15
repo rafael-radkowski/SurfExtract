@@ -20,6 +20,7 @@ Dec 15, 2019, RR:
 - Added a PCD ASCII writer, to write the model as a pcd file.
 - Changed the api for the function writeToFile. The file type is now a function argument. 
 - Added a PLY ASCII writer
+- Added a function to return the model output scale.
 */
 
 #include <iostream>
@@ -71,6 +72,11 @@ public:
 	@param scale - float value larger than 0.0001;
 	*/
 	bool setOutputScale(float scale);
+
+	/*
+	Return the output scale as float
+	*/
+	float getOutputScale(void);
 
 	/*
 	Return the current density;

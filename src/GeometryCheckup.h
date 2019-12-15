@@ -23,6 +23,8 @@ MIT License
 ------------------------------------------------------------------------------------------------------
 Last edits:
 
+Dec 15, 2019, RR
+- Added a function to scale the outgoing object. 
 
 */
 
@@ -80,7 +82,7 @@ public:
 	Write the obj data to a file.
 	@param path_and_file - string containg the path and the file. 
 	*/
-	bool writeObj(std::string path_and_file);
+	bool writeObj(std::string path_and_file, float scale = 1.0);
 
 
 	/*

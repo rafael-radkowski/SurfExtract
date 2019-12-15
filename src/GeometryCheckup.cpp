@@ -144,7 +144,7 @@ bool GeometryCheckup::loadObj(std::string path_and_file)
 Write the obj data to a file.
 @param path_and_file - string containg the path and the file. 
 */
-bool GeometryCheckup::writeObj(std::string path_and_file)
+bool GeometryCheckup::writeObj(std::string path_and_file, float scale)
 {
 	// write the temporary material file
 	processMtlFile(_path_and_file, path_and_file);
@@ -180,15 +180,24 @@ bool GeometryCheckup::writeObj(std::string path_and_file)
 		else outfile << _original_file_content[i] << endl;
 	}
 
+
+	Eigen::Matrix3f T = Eigen::Matrix3f::Identity();
+	T(0,0) = scale;
+	T(1,1) = scale;
+	T(2,2) = scale;
+	Eigen::Matrix3f Tit = (T.inverse()).transpose(); 
+
 	// write out the modified data
 	for (int i = 0; i < N; i++) {
-		Eigen::Vector3f o_p =  _points[i];
+		Eigen::Vector3f p =  _points[i];
+		Eigen::Vector3f o_p =  T * p;
 		outfile << std::fixed << "v " << o_p[0] << " " << o_p[1] << " " << o_p[2] << "\n";
 	}
 
 	// write out the modified data
 	for (int i = 0; i < M; i++) {
-		Eigen::Vector3f o_n =  _normals[i];
+		Eigen::Vector3f n =  _normals[i];
+		Eigen::Vector3f o_n =  Tit * n;
 		o_n.normalize();
 		outfile << std::fixed << "vn " << o_n[0] << " " << o_n[1] << " " << o_n[2] << "\n";
 	}

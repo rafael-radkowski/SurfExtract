@@ -73,10 +73,6 @@ bool SurfExtractApp::loadModel(string path_to_file)
 		return false;
 	}
 
-	_temp_model_path = "";
-	int idx0 = path_to_file.find_last_of(".");
-	_temp_model_path = path_to_file.substr(0,idx0);
-	_temp_model_path.append("_gfx.obj");
 
 	// the geometry object writes its own model to a file in _temp_model_path.
 	// the tools uses this new temp model to extract the surface point cloud. 
@@ -140,6 +136,7 @@ void SurfExtractApp::render_fcn(glm::mat4 proj_matrix, glm::mat4 view_matrix)
 		if (!_output_done && _output_path.size() > 0) {
 			_pca->writeToFile(_output_path, "obj");
 			_pca->writeToFile(_output_path, "ply");
+			rewrite_obj_gfx();
 			_output_done = true;
 			_enable_render_normals = true;
 		}
@@ -376,3 +373,14 @@ void SurfExtractApp::keyboard_cb(int key, int action)
 
 }
 
+void SurfExtractApp::rewrite_obj_gfx(void) 
+{
+	if (!_pca) return ;
+		
+	string path  = "";
+	int idx0 = _output_path.find_last_of(".");
+	path = _output_path.substr(0,idx0);
+	path.append("_gfx.obj");
+
+	_geometry_check.writeObj(path, _pca->getOutputScale());
+}

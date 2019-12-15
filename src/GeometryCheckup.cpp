@@ -168,6 +168,8 @@ bool GeometryCheckup::writeObj(std::string path_and_file)
 	//assert(_points.size() == _normals.size());
 
 	outfile << "# Created by SurfExtract point cloud generation.\n";
+	outfile << "# This model was created as part of the point cloud extraction process.\n";
+	outfile << "# It is an intermediate file with a centered coordinate system.\n";
 	outfile << "# Size: " << N << "\n\n";
 
 

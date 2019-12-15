@@ -73,6 +73,11 @@ bool SurfExtractApp::loadModel(string path_to_file)
 		return false;
 	}
 
+	_temp_model_path = "";
+	int idx0 = path_to_file.find_last_of(".");
+	_temp_model_path = path_to_file.substr(0,idx0);
+	_temp_model_path.append("_gfx.obj");
+
 	// the geometry object writes its own model to a file in _temp_model_path.
 	// the tools uses this new temp model to extract the surface point cloud. 
 	ret = _geometry_check.processObj(path_to_file, _temp_model_path);

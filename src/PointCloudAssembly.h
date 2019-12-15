@@ -15,6 +15,11 @@ Last edits:
 
 Dec 14, 2019, RR:
 - Added a function to set the minimum allowed point cloud density. This can prevent low performance. 
+
+Dec 15, 2019, RR:
+- Added a PCD ASCII writer, to write the model as a pcd file.
+- Changed the api for the function writeToFile. The file type is now a function argument. 
+- Added a PLY ASCII writer
 */
 
 #include <iostream>
@@ -42,6 +47,9 @@ Dec 14, 2019, RR:
 #include "Types.h"
 #include "Mat2Points.h"
 #include "LoaderOBJ.h"
+#include "ReaderWriterPCD.h"
+#include "ReaderWriterPLY.h"
+
 
 class PointCloudAssembly
 {
@@ -95,8 +103,11 @@ public:
 	/*
 	Write the point cloud to an obj file
 	@param path_and_filename - string with the relative or abosolute path. 
+	@param type - string containing the type. Currently, "obj", "ply", and "pcd" are supported. 
 	*/
-	bool writeToFileOBJ(string path_and_filename);
+	bool writeToFile(string path_and_filename, std::string type = "obj");
+
+
 
 
 	/*

@@ -16,7 +16,9 @@ Last edits:
 Dec 14, 2019, RR:
 - Added a class GeometryCheckup to set the model to its centroid and to determine the bounding box. 
 - Added a function to automatically set the camera distance if the user does not overwrite the value. 
-
+Dec 14, 2019, RR:
+- Addated all savetoFile functions to accomodate changes in PointCloudAssembly: the file type is an arguement.
+- Added a ply file writer. The user gets two files now. 
 */
 
 #include <iostream>

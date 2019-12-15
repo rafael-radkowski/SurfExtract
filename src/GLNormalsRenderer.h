@@ -1,5 +1,23 @@
 #ifndef __GL_NORMAL_RENDERER__
 #define __GL_NORMAL_RENDERER__
+/*
+
+Rafael Radkowski
+Iowa State University
+rafael@iastate.edu
+March 2019
+MIT License
+------------------------------------------------------------------------------------------------------
+Last edits:
+
+Dec 15, 2019, RR
+- Added a parameter to the function updateNormals to accomodate larger models. 
+- Added a check that verifies that the number of points does not exceed the allocated vbo memory. 
+- Added a function to automatically calculate the length of the normal vector, depending on the distance between
+   camera and object. 
+*/
+
+
 
 // stl include
 #include <iostream>
@@ -7,6 +25,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <math.h>
 
 // GLEW include
 #include <GL/glew.h>
@@ -42,8 +61,9 @@ public:
 
 		/*
 		Update the points using the existing references. 
+		@param length - length of the normal vectors
 		*/
-		void updateNormals(void);
+		void updateNormals(float length = 1.0);
 
 
 		/*
@@ -74,6 +94,18 @@ public:
 		void enable(bool value);
 
 private:
+
+		/*
+		Determine the length of the normal vectors as a function of
+		the camera distance. The further the camera away, the larger 
+		the renderer renders the normal vectors. 
+		@param vm - a 4x4 view matrix. 
+		*/
+		float computeNormalLength(glm::mat4 vm);
+
+		
+		//---------------------------------------------------------
+
 
 		int vaoID[1]; // Our Vertex Array Object
 		int vboID[2]; // Our Vertex Buffer Object

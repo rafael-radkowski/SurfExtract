@@ -172,9 +172,24 @@ PointCloud&	PointCloudAssembly::getPointCloud(void)
 Write the point cloud to an obj file
 @param path_and_filename - string with the relative or abosolute path. 
 */
-bool PointCloudAssembly::writeToFileOBJ(string path_and_filename)
+bool PointCloudAssembly::writeToFile(string path_and_filename, std::string type)
 {
-	return LoaderObj::Write(path_and_filename, &_points_final.points, &_points_final.normals, _output_scale);
+	bool ret = false;
+
+	if(type.compare("obj") == 0){
+		ret = LoaderObj::Write(path_and_filename, &_points_final.points, &_points_final.normals, _output_scale);
+	}
+	else if(type.compare("pcd") == 0){
+		ret = ReaderWriterPCD::Write(path_and_filename, _points_final.points, _points_final.normals, _output_scale);
+	}
+	else if(type.compare("ply") == 0){
+		ret = ReaderWriterPLY::Write(path_and_filename, _points_final.points, _points_final.normals, _output_scale);
+	}
+	else {
+		ret = LoaderObj::Write(path_and_filename, &_points_final.points, &_points_final.normals, _output_scale);
+	}
+
+	return ret;
 }
 
 /*

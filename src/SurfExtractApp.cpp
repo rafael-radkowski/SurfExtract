@@ -123,6 +123,7 @@ bool SurfExtractApp::loadModel(string path_to_file)
 void SurfExtractApp::render_fcn(glm::mat4 proj_matrix, glm::mat4 view_matrix)
 {
 
+	// this runs the automatic point cloud sampler .
 	if (!_pview_complete && _pview_start) {
 		_pview_complete = _pview->draw_sequence();
 		_pca->addData(_pview->getCurrData());
@@ -130,23 +131,25 @@ void SurfExtractApp::render_fcn(glm::mat4 proj_matrix, glm::mat4 view_matrix)
 		_gl_pc->updatePoints();
 	}
 	else {
+		// this saves the object once all has been done. 
 		if (!_output_done && _output_path.size() > 0) {
-			_pca->writeToFileOBJ(_output_path);
+			_pca->writeToFile(_output_path, "obj");
+			_pca->writeToFile(_output_path, "ply");
 			_output_done = true;
 			_enable_render_normals = true;
 		}
 	}
 	
 
-
+	// render the 3D model. 
 	if (_model && _enable_render_3d)
 		_model->draw(proj_matrix, view_matrix);
 
-
+	// render the points
 	if(_gl_pc && _enable_render_points)
 		_gl_pc->draw(proj_matrix, view_matrix);
 
-
+	// render the normal vectors
 	if (_gl_normals  && _enable_render_normals)
 		_gl_normals->draw(proj_matrix, view_matrix);
 
@@ -177,15 +180,18 @@ void SurfExtractApp::autoSetCameraDistance(void)
 {
 	if(_pview_camera_distance_user_value) return;
 
+	// retrive the bounding box data
 	float bbedge = _geometry_check.getMaxBBEdge();
-	float camera_multiplier = 1.75f;
 
+	// set the camera distance to 1.75 or 1.4 x the max object extesnion
+	float camera_multiplier = 1.75f;
 	if(bbedge > 100.0) camera_multiplier = 1.4f;
-		
 	_pview_camera_distance = bbedge * camera_multiplier;
 
+	// do nothing if the object is too close. 
 	if (_pview_camera_distance < 0.1) return ;
 
+	// set the values. 
 	glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0, _pview_camera_distance), glm::vec3(0.0f, 0.0f, 00.f), glm::vec3(0.0f, 1.0f, 0.0f));
 	if (_renderer){
 		_renderer->setViewMatrix(viewMatrix);
@@ -271,7 +277,7 @@ bool SurfExtractApp::saveToObj(string path)
 	if (!_pca)return false;
 
 	_output_path = path;
-	return _pca->writeToFileOBJ(path);
+	return _pca->writeToFile(path, "obj");
 }
 
 bool SurfExtractApp::setVerbose(bool verbose){
@@ -345,7 +351,8 @@ void SurfExtractApp::keyboard_cb(int key, int action)
 			resample(density);
 			break;
 		case 83: // s
-			_pca->writeToFileOBJ(_output_path);
+			_pca->writeToFile(_output_path, "obj");
+			_pca->writeToFile(_output_path, "ply");
 			break;
 		case 51: // 3
 			if (_show_normals) _show_normals = false;

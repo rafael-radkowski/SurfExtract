@@ -1,11 +1,30 @@
 #pragma once
 /*
+class GeometryCheckup
 
+The class provides several features to check the geometry of the object before processing it
 
----------------------------------------
+Features:
+- Load and write  temporary obj files: the class works with temporary obj files. It reads the original file, 
+  rewrites the content (centorid, material), and saves the new geometry in a new file. 
+- Create material file: it creates a new material file in the case the given object does not come with any material.
+- Calculate the geometric centroid: it calculates the geometric centroid of an object as its mean.
+- Calculate bounding box: the class calculates the bounding box and the edge length of the object.
+- Move the object to bb center: it modifices all vertices so that the object ends up in the bb centroid. 
+- Checks the possible density for the point cloud sampler: with the bb size at hand, the class determines the 
+  minimum possible density so that the application does not stall. It assumes that the comptuer has sufficient 
+  resources to handle 1000 voxels in each direction. 
+
+Rafael Radkowski
+Iowa State University
+rafael@iastate.edu
+March 2019
+MIT License
+------------------------------------------------------------------------------------------------------
+Last edits:
+
 
 */
-
 
 #include <vector>
 #include <iostream>

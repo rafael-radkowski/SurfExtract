@@ -86,6 +86,7 @@ GLNormalsRenderer::GLNormalsRenderer(vector<Eigen::Vector3f>& dst_points, vector
 
 	int size = MAX_POINTS;
 
+	// fill the vertex buffer object with garbage
 	for(int i=0; i<size; i++)
 	{
         points.push_back( glm::vec3(0.0,0.0, i * 0.01 ) );
@@ -103,12 +104,13 @@ GLNormalsRenderer::GLNormalsRenderer(vector<Eigen::Vector3f>& dst_points, vector
 /*
 Update the points using the existing references. 
 */
-void GLNormalsRenderer::updateNormals(void)
+void GLNormalsRenderer::updateNormals(float length)
 {
 	_N = _normals.size();
 
 	if (_N <= 0)return;
-	float length = 0.1;
+	if(_N  > MAX_POINTS) _N = MAX_POINTS;
+
 	for (int i = 0; i < _N; i++) {
 		points[i * 2] = glm::vec3(_points[i].x(), _points[i].y(), _points[i].z());
 		points[i*2+1] =   glm::vec3(_points[i].x() + length * _normals[i].x(), _points[i].y() + length * _normals[i].y(), _points[i].z() + length * _normals[i].z());
@@ -147,8 +149,8 @@ void GLNormalsRenderer::draw(glm::mat4 projectionMatrix, glm::mat4 viewMatrix)
 	_projectionMatrix = projectionMatrix;
 	_viewMatrix = viewMatrix;
 
-
-	updateNormals();
+	// update the normal vectors
+	updateNormals(computeNormalLength(viewMatrix));
 
     // Enable the shader program
 	glUseProgram(program);
@@ -180,4 +182,21 @@ Enable the renderer.
 void GLNormalsRenderer::enable(bool value)
 {
 	_enable = value;
+}
+
+
+/*
+Determine the length of the normal vectors as a function of
+the camera distance. The further the camera away, the larger 
+the renderer renders the normal vectors. 
+@param vm - a 4x4 view matrix. 
+*/
+float GLNormalsRenderer::computeNormalLength(glm::mat4 vm)
+{
+	float length = 0.1;
+
+	float dist = (std::abs)(vm[3][2]);
+	length = (std::max)( dist/10.0f, 0.01f);
+	
+	return length;
 }

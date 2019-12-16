@@ -10,12 +10,23 @@ Load a point cloud object from a file
 */
 //virtual 
 //static 
-bool ReaderWriterPLY::Read(const std::string file, std::vector<Eigen::Vector3f>& dst_points, std::vector<Eigen::Vector3f>& dst_normals, const bool invert_z)
+bool ReaderWriterPLY::Read(const std::string file, std::vector<Eigen::Vector3f>& dst_points, std::vector<Eigen::Vector3f>& dst_normals, const bool normalize, const bool invert_z)
 {
 	if (!FileUtils::Exists(file)) {
 		std::cout << "[ERROR] - ReaderWriterPLY: the file " << file << " does not exist." << std::endl;
 		return false;
 	}
+
+
+	// append a ply ending 
+	int index = file.find_last_of(".");
+	std::string outfile;
+
+	if (index != -1)
+	{
+		outfile = file.substr(0, index);
+	}
+	outfile.append(".ply");
 
 
 	std::ifstream infile(file);

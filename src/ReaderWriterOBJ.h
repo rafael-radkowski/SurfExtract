@@ -1,10 +1,15 @@
 #pragma once
 /*
-Class ReaderWriterPLY
-This class reads and writes model in the PLY file format.
+Class ReaderWriterOBJ
+
+This class reads and writes model in the OBJ file format.
 The supported format is 
-	x y z nx ny nz  (points, normals)
-Also, the class only reads the vertices as points. 
+	v x y z 
+	vb nx ny nz  
+(points, normals)
+Also, the class only reads the vertices as points. It ignores surfaces. 
+
+Currently, the number of points must match the number of normals. 
 
 NOTE THAT THIS CLASS IS NOT A COMPLETE PLY LOADER / WRITER. IT JUST SERVES A LIMITED PURPOSE.
 
@@ -34,11 +39,11 @@ Dec 15, 2019, RR
 #include "ReaderWriter.h"
 #include "FileUtils.h"
 
-class ReaderWriterPLY : public ReaderWriter
+class ReaderWriterOBJ : public ReaderWriter
 {
 public:
 
-		/*!
+	/*!
 	Load a point cloud object from a file
 	@param file - The file
 	@param loadedNormals = The output location of the loaded normals

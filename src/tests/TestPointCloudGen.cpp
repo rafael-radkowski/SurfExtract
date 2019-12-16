@@ -2,7 +2,7 @@
 
 
 //static 
-bool TestPointCloudGen::Generate(const int num_points, const float magnitute, std::vector<Eigen::Vector3f>& dst_points, std::vector<Eigen::Vector3f>& dst_normals )
+bool TestPointCloudGen::Generate(const int num_points, const float magnitute, std::vector<Eigen::Vector3f>& dst_points, std::vector<Eigen::Vector3f>& dst_normals, const bool normalize_normals )
 {
 	dst_points.clear();
 	dst_normals.clear();
@@ -17,6 +17,8 @@ bool TestPointCloudGen::Generate(const int num_points, const float magnitute, st
 		
 		dst_points.push_back(Eigen::Vector3f(p[i*3], p[i*3 + 1], p[i*3 + 2]));
 		dst_normals.push_back(Eigen::Vector3f(n[i*3], n[i*3 + 1], n[i*3 + 2]));
+		if(normalize_normals)
+			dst_normals.back().normalize();
 	}
 
 	return true;

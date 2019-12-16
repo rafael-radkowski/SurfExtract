@@ -39,7 +39,7 @@ public:
 	@return cloud = The output of the loaded point cloud object
 	*/
 	//virtual 
-	static bool Read(const std::string file, std::vector<Eigen::Vector3f>& dst_points, std::vector<Eigen::Vector3f>& dst_normals, const bool invert_z = true);
+	static bool Read(const std::string file, std::vector<Eigen::Vector3f>& dst_points, std::vector<Eigen::Vector3f>& dst_normals, const bool normalize = false, const bool invert_z = true);
 
 
 	/*

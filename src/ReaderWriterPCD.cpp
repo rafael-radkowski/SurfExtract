@@ -10,7 +10,7 @@ Load a point cloud object from a file
 */
 //virtual 
 //static 
-bool ReaderWriterPCD::Read(const std::string file, std::vector<Eigen::Vector3f>& dst_points, std::vector<Eigen::Vector3f>& dst_normals, const bool invert_z)
+bool ReaderWriterPCD::Read(const std::string file, std::vector<Eigen::Vector3f>& dst_points, std::vector<Eigen::Vector3f>& dst_normals, const bool normalize, const bool invert_z)
 {
 
 

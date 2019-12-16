@@ -18,6 +18,8 @@ Last edits:
 #include <vector>
 #include <fstream>
 #include <strstream>
+#include <algorithm>
+#include <locale>
 
 // Eigen
 #include <Eigen/Dense>
@@ -33,7 +35,7 @@ public:
 	@param loadedNormals = The output location of the loaded normals
 	@return cloud = The output of the loaded point cloud object
 	*/
-	virtual bool Read(const std::string file, std::vector<Eigen::Vector3f>& dst_points, std::vector<Eigen::Vector3f>& dst_normals, const bool invert_z = true) = 0;
+	virtual bool Read(const std::string file, std::vector<Eigen::Vector3f>& dst_points, std::vector<Eigen::Vector3f>& dst_normals, const bool normalize = false, const bool invert_z = false) = 0;
 
 
 	/*
@@ -53,10 +55,24 @@ protected:
 		 return !s.empty() && s.find_first_not_of("0123456789.-e") == std::string::npos;
 	}
 
+
 	// check the expected filetype of the object
 	static bool check_type(std::string path_and_file, std::string type) {
+		
+		int idx0 = path_and_file.find_last_of(".");
+		std::string t = path_and_file.substr(idx0+1, path_and_file.size() - idx0 - 1);
 
+		// convert to lower case
+		std::for_each(t.begin(), t.end(), [](char & c) {
+			c = ::tolower(c);
+		});
+
+		if (type.compare(t) == 0) {
+			return true;
+		}
+		return false;
 	}
+
 
 	// split the lines into single elements
 	static  std::vector<std::string> split(const std::string& s, char delimiter)

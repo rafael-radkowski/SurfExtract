@@ -13,6 +13,8 @@ file(GLOB testfiles_SRC
 set(files_to_test
 	../ReaderWriterPLY.h
 	../ReaderWriterPLY.cpp
+	../ReaderWriterOBJ.h
+	../ReaderWriterOBJ.cpp
 	../ReaderWriter.h
 	../FileUtils.h
 	../FileUtils.cpp

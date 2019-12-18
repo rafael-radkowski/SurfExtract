@@ -1,8 +1,8 @@
 # Main cmake file 
 cmake_minimum_required(VERSION 2.6)
 
-
-
+cmake_policy(SET CMP0074 NEW)
+cmake_policy(SET CMP0015 NEW)
 
 file(GLOB GLUtils_SRC
     "*.h"
@@ -49,14 +49,22 @@ set(GLSupport
 target_link_libraries(${PROJECT_NAME}   ${GLEW_LIBRARIES} ${GLEW_LIBRARY} ${GLFW3_LIBRARY} ${OPENGL_LIBRARIES}  ${OPENCV_LIBRARIES}  ${GLSupport} )
 
 
+option(WITH_LIB "Build a lib" OFF)
+
+if(WITH_LIB)
+	# Create an executable
+	add_library(${PROJECT_NAME}Lib SHARED  ${Dll_src} )
 
 
-# Create an executable
-add_library(${PROJECT_NAME}Lib SHARED  ${Dll_src} )
+	# Add libraries
+	target_link_libraries(${PROJECT_NAME}Lib   ${GLEW_LIBRARIES} ${GLEW_LIBRARY} ${GLFW3_LIBRARY} ${OPENGL_LIBRARIES} ${OPENCV_LIBRARIES}  ${GLSupport} )
+	
+endif()
 
+option(WITH_TEST "Build test cases" OFF)
 
-# Add libraries
-target_link_libraries(${PROJECT_NAME}Lib   ${GLEW_LIBRARIES} ${GLEW_LIBRARY} ${GLFW3_LIBRARY} ${OPENGL_LIBRARIES} ${OPENCV_LIBRARIES}  ${GLSupport} )
-
+if(WITH_TEST)
 # add subdirectory
 add_subdirectory(tests)
+
+endif()

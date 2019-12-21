@@ -38,14 +38,7 @@ Dec 21, 2019, RR
 #include <vector>
 #include <algorithm>
 #include <cassert>
-
-#if _MSC_VER >= 1920 && _MSVC_LANG  == 201703L 
-#include <filesystem>
-#else
-#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
-#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
-#include <experimental/filesystem>
-#endif
+#include <limits>
 
 
 #ifdef __WIN32
@@ -58,7 +51,7 @@ Dec 21, 2019, RR
 // local
 #include "Types.h"
 #include "LoaderOBJ.h"
-
+#include "FileUtilsExt.h"
 
 
 class GeometryCheckup {

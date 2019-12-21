@@ -49,7 +49,9 @@ Dec 20, 2019, RR
 #include "ImageWriter.h"
 #include "CommonTypes.h"
 
-using namespace std;
+
+namespace surfe
+{
 
 class SurfacePosRenderer
 {
@@ -68,7 +70,7 @@ public:
 	@param path_and_file - string containing the relative or absolute path.
 	@return true - if successfully loaded
 	*/
-	bool setModelFromFile(string path_and_file);
+	bool setModelFromFile(std::string path_and_file);
 
 	
 	/*
@@ -97,7 +99,7 @@ public:
 	@param path - relative or absolute output path
 	@param name - name template for the output images.
 	*/
-	void setOutputPath(string path, string name = "image");
+	void setOutputPath(std::string path, std::string name = "image");
 
 protected:
 
@@ -175,8 +177,10 @@ protected:
 
 	bool						_writer_enabled;
 	ImageWriter*				_writer;
-	string					_output_file_path;
-	string					_output_file_name;
+	std::string					_output_file_path;
+	std::string					_output_file_name;
 	int						_output_file_id;
 
 };
+
+}// namespace

@@ -80,7 +80,7 @@ include_directories(./dep/GLSupport/include)
 
 add_compile_definitions(_WITH_CAMERA)
 add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -99,19 +99,16 @@ if( (NOT GLSUPPORT_DIR) OR (NOT EXISTS ${GLSUPPORT_DIR}))
 					CACHE PATH "glSupport dir" FORCE)
 
 
-	add_library(GLUtils INTERFACE)
-	target_include_directories(GLUtils INTERFACE
-								$<BUILD_INTERFACE:${GLSUPPORT_DIR}/include>
-								$<INSTALL_INTERFACE:./dep/lib>)
 		
-	add_subdirectory(dep/GLSupport)
+	
 else()
   # update the submodule to the latest version.
   #execute_process(COMMAND git submodule update --remote --merge
   #	  				WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-	add_subdirectory(dep/GLSupport)
 endif()
 	
-
+add_subdirectory(dep/GLSupport)
 add_subdirectory(src)
+
+

@@ -10,7 +10,7 @@ namespace PolyhedronGeometry_types
 
 
 using namespace PolyhedronGeometry_types;
-using namespace arlab;
+
 /*
 Create an Icosahedron or Polyhedron, depending on the num of subdivisions. 
 @param divisions - the number of subdivisons. 0 creates an Icosahedron;
@@ -19,7 +19,7 @@ Create an Icosahedron or Polyhedron, depending on the num of subdivisions.
 			<vertices, triangle indices >
 */
 //static 
-std::pair< vector<glm::vec3>, vector<glm::ivec3> > PolyhedronGeometry::Create(int subdivisions)
+std::pair< vector<glm::vec3>, vector<glm::ivec3> > surfe::PolyhedronGeometry::Create(int subdivisions)
 {
 	// create the basic Icosahedron
 	CreateIcosahedron();
@@ -39,7 +39,7 @@ std::pair< vector<glm::vec3>, vector<glm::ivec3> > PolyhedronGeometry::Create(in
 /*
 Create an Icosahedron
 */
-void PolyhedronGeometry::CreateIcosahedron(void)
+void surfe::PolyhedronGeometry::CreateIcosahedron(void)
 {
 	_vertices.clear();
 	_triangle_index.clear();
@@ -103,7 +103,7 @@ void PolyhedronGeometry::CreateIcosahedron(void)
 
 
 
-int PolyhedronGeometry::vertex_for_edge(Lookup& lookup, vector<glm::vec3>& vertices, int first, int second)
+int surfe::PolyhedronGeometry::vertex_for_edge(Lookup& lookup, vector<glm::vec3>& vertices, int first, int second)
 {
 	Lookup::key_type key(first, second);
 	if (key.first>key.second)
@@ -127,7 +127,7 @@ int PolyhedronGeometry::vertex_for_edge(Lookup& lookup, vector<glm::vec3>& verti
 /*
 Subdivide the Icosahedron triangles
 */
-vector<glm::ivec3> PolyhedronGeometry::subdivide(vector<glm::vec3>& vertices, vector<glm::ivec3> triangles)
+vector<glm::ivec3> surfe::PolyhedronGeometry::subdivide(vector<glm::vec3>& vertices, vector<glm::ivec3> triangles)
 {
 	Lookup lookup;
 	vector<glm::ivec3> result;

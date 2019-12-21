@@ -12,7 +12,7 @@ Load a point cloud object from a file
 //static 
 bool ReaderWriterOBJ::Read(const std::string file, std::vector<Eigen::Vector3f>& dst_points, std::vector<Eigen::Vector3f>& dst_normals, const bool normalize, const bool invert_z)
 {
-	if (!FileUtils::Exists(file)) {
+	if (!surfe::FileUtils::Exists(file)) {
 		std::cout << "[ERROR] - ReaderWriterOBJ: the file " << file << " does not exist." << std::endl;
 		return false;
 	}

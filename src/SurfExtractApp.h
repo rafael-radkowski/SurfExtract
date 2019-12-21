@@ -54,7 +54,7 @@ Dec 15, 2019, RR
 #include "GLPointCloudRenderer.h"
 #include "GLNormalsRenderer.h"
 #include "GeometryCheckup.h"
-#include "FileUtils.h"
+#include "FileUtilsExt.h"
 
 using namespace std::placeholders;
 using namespace std;
@@ -204,7 +204,7 @@ private:
 	int						_window_height;
 
 	// renders the camera views into opencv matrices
-	PolyhedronViewRenderer* _pview;
+	surfe::PolyhedronViewRenderer*	_pview;
 	bool					_pview_complete; // indicates that all images have been rendered
 	bool					_pview_start; // indicates that the model was created and that the renders is ready to go
 

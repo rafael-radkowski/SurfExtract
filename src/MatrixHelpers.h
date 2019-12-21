@@ -5,9 +5,6 @@
 #include <iostream>
 #include <vector>
 #include <conio.h>
-#include <experimental\filesystem>
-
-#include <Windows.h> // for file attributes
 #include <cassert>
 
 // Eigen
@@ -30,13 +27,11 @@ public:
 	static inline void MatrixToQuaternion(Eigen::Matrix4f a, Eigen::Quaternionf& q) {
 		
 
-		Matrix3f mat = a.block(0, 0, 3, 3);
-		Quaternionf c(mat);
+		Eigen::Matrix3f mat = a.block(0, 0, 3, 3);
+		Eigen::Quaternionf c(mat);
 		q = c;
 
 		return;
-
-
 
 
 		float trace = a(0,0) + a(1,1) + a(2,2); // I removed + 1.0f; see discussion with Ethan
@@ -117,9 +112,5 @@ public:
 		a(2, 3) = 0;
 		
 	}
-
-
-
-
 
 };

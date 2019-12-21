@@ -1,5 +1,7 @@
+#pragma once
 #ifndef __IMAGEWRITER__
 #define __IMAGEWRITER__
+
 /*
 class ImageWriter
 
@@ -27,21 +29,25 @@ Jan 21, 2019:
 - Added a variable for the log file to the class
 - Fixed a bug that prevented that the class cleans the output folder. 
 Dec 21, 2019
-- Added FileUtils.h and replaced the c++ api with fileutils apis. 
+- Added FileUtilsExt.h and replaced the c++ api with fileutils apis. 
 */
 
 // stl
 #include <iostream>
 #include <vector>
 #include <string>
+
 #if _MSC_VER >= 1920 && _MSVC_LANG  == 201703L 
-#include <filesystem>
+	#include <filesystem>
 #else
+	#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+	#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
+	#include <experimental/filesystem>
+	#define _USE_EXP
+#endif
+
 #define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
 #define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
-#include <experimental/filesystem>
-#define _USE_EXP
-#endif
 
 // opencv
 #include <opencv2/opencv.hpp>
@@ -60,9 +66,8 @@ Dec 21, 2019
 #include "MatrixFileUtils.h"
 #include "MatrixHelpers.h"
 #include "types.h"
-#include "FileUtils.h"
+#include "FileUtilsExt.h"
 
-using namespace std;
 
 class ImageWriter
 {
@@ -77,7 +82,7 @@ public:
 	@param path - the output file path
 	@param name - the file name as string
 	*/
-	void setPathAndImageName(string path, string name);
+	void setPathAndImageName(std::string path, std::string name);
 
 
 	/*
@@ -105,16 +110,16 @@ private:
 	Create a folder if the path does not exist. 
 	@param path - string with the relative or absolute path. 
 	*/
-	bool checkFolder(string path);
+	bool checkFolder(std::string path);
 
 
 	//---------------------------------------------------------
 	// members
 
-	string					_output_file_path;
-	string					_output_file_name;
+	std::string					_output_file_path;
+	std::string					_output_file_name;
 
-	string					_logfile_name;
+	std::string					_logfile_name;
 
 
 

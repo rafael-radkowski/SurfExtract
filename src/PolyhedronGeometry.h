@@ -34,7 +34,7 @@ All copyrights reserved
 
 using namespace std;
 
-namespace arlab
+namespace surfe
 {
 
 	class PolyhedronGeometry {

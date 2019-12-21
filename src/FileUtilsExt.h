@@ -26,7 +26,6 @@ Latest edits
 #include <map>
 #include <string>
 #ifdef _WIN32
-#include <windows.h>
 #include <tchar.h>
 #include <stdio.h>
 #include <conio.h>
@@ -47,6 +46,9 @@ Latest edits
 
 
 using namespace std;
+
+namespace surfe{
+
 
 class FileUtils
 {
@@ -85,11 +87,12 @@ public:
 	Create one directory
 	@param path  - string containing the path
 	*/
-	static bool CreateDirectory(string path);
+	static bool CreateOneDirectory(string path);
 
 };
 
 
+}
 
 #endif
 

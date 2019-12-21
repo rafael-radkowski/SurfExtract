@@ -6,7 +6,7 @@ Constructor
 @param window_width, window_height - width and height of the current render window in pixel
 @param render_width, render_height - width and height of the image to render in pixel
 */
-SurfacePosRenderer::SurfacePosRenderer(int window_width, int window_height, int render_width, int render_height):
+surfe::SurfacePosRenderer::SurfacePosRenderer(int window_width, int window_height, int render_width, int render_height):
 	_window_width(window_width), _window_height(window_height), _image_width(render_width), _image_height(render_height)
 {
 	_verbose = false;
@@ -25,7 +25,7 @@ SurfacePosRenderer::SurfacePosRenderer(int window_width, int window_height, int 
 }
 
 
-SurfacePosRenderer::~SurfacePosRenderer()
+surfe::SurfacePosRenderer::~SurfacePosRenderer()
 {
 	if (_model)delete _model;
 	if (_sphere) delete _sphere;
@@ -36,7 +36,7 @@ Load a 3D model from a file
 @param path_and_file - string containing the relative or absolute path.
 @return true - if successfully loaded
 */
-bool SurfacePosRenderer::setModelFromFile(string path_and_file)
+bool surfe::SurfacePosRenderer::setModelFromFile(std::string path_and_file)
 {
 
 	_program = cs557::LoadAndCreateShaderProgram("position_renderer.vs", "position_renderer.fs");
@@ -62,7 +62,7 @@ bool SurfacePosRenderer::setModelFromFile(string path_and_file)
 /*
 Draw the object
 */
-bool SurfacePosRenderer::draw(void)
+bool surfe::SurfacePosRenderer::draw(void)
 {
 	drawFBO();
 	renderHelpers();
@@ -75,7 +75,7 @@ bool SurfacePosRenderer::draw(void)
 Set verbose mode to get more text output
 @param v - true to enable verbose mode, false to disable it
 */
-void SurfacePosRenderer::setVerbose(bool v)
+void surfe::SurfacePosRenderer::setVerbose(bool v)
 {
 	_verbose = v;
 }
@@ -85,7 +85,7 @@ void SurfacePosRenderer::setVerbose(bool v)
 Set the view matrix - the prerender image is rendered from this position
 @param vm
 */
-void SurfacePosRenderer::setViewMatrix(glm::mat4 vm)
+void surfe::SurfacePosRenderer::setViewMatrix(glm::mat4 vm)
 {
 	_view_matrix = vm;
 
@@ -99,7 +99,7 @@ void SurfacePosRenderer::setViewMatrix(glm::mat4 vm)
 /*
 Prepare a set of visual helpers
 */
-bool SurfacePosRenderer::prepareHelpers(void)
+bool surfe::SurfacePosRenderer::prepareHelpers(void)
 {
 	// sphere
 
@@ -144,7 +144,7 @@ bool SurfacePosRenderer::prepareHelpers(void)
 /*
 Render all helper content
 */
-bool SurfacePosRenderer::renderHelpers(void)
+bool surfe::SurfacePosRenderer::renderHelpers(void)
 {
 	if (_sphere) {
 		glm::mat4 inv  = glm::inverse(_view_matrix);
@@ -163,7 +163,7 @@ bool SurfacePosRenderer::renderHelpers(void)
 /*
 Prepare the fbo renderer
 */
-bool SurfacePosRenderer::prepareFBO(void)
+bool surfe::SurfacePosRenderer::prepareFBO(void)
 {
 	// This function is part of RenderToTexture.h
 	CreateRenderToTexture32Bit(_image_width, _image_height, _fboHidden, _color_texture_idx, _depth_texture_idx);
@@ -179,7 +179,7 @@ bool SurfacePosRenderer::prepareFBO(void)
 /*
 Draw the FBO renderer
 */
-bool SurfacePosRenderer::drawFBO(void)
+bool surfe::SurfacePosRenderer::drawFBO(void)
 {
 	if (!_model)return false;
 
@@ -249,7 +249,7 @@ bool SurfacePosRenderer::drawFBO(void)
 /*
 Disable and enable the file writer
 */
-bool SurfacePosRenderer::enable_writer(bool enable)
+bool surfe::SurfacePosRenderer::enable_writer(bool enable)
 {
 	_writer_enabled = enable;
 
@@ -261,7 +261,7 @@ Set an output path for the images
 @param path - relative or absolute output path
 @param name - name template for the output images.
 */
-void SurfacePosRenderer::setOutputPath(string path, string name)
+void surfe::SurfacePosRenderer::setOutputPath(std::string path, std::string name)
 {
 	_output_file_path = path;
 	_output_file_name = name;
@@ -275,7 +275,7 @@ void SurfacePosRenderer::setOutputPath(string path, string name)
 Return the latest data image.
 @return OpenCV matrix of type CV_32F_C3 with the rendered positions
 */
-cv::Mat SurfacePosRenderer::getCurrData(void)
+cv::Mat surfe::SurfacePosRenderer::getCurrData(void)
 {
 	cv::Mat image(_image_height, _image_width, CV_32FC3, _data_rgb);
 	cv::Mat dst, output_rgb;

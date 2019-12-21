@@ -56,11 +56,7 @@ Load an obj file.
 */
 bool GeometryCheckup::loadObj(std::string path_and_file)
 {
-#ifdef _MSC_VER <= 1916
-	if (!std::experimental::filesystem::exists(path_and_file)) {
-#else
-	if (!std::filesystem::exists(path_and_file)) {
-#endif
+	if (!surfe::FileUtils::Exists(path_and_file)) {
 		cout << "[ERROR] - GeometryCheckup: File " << path_and_file << " does not exist." << endl;
 		return false;
 	}
@@ -420,6 +416,7 @@ bool GeometryCheckup::reset(void)
 	_path_and_file = "";
 	_mtl_line = -1;
 
+
 	maxX =  std::numeric_limits<float>::min();
     maxY =  std::numeric_limits<float>::min();
     maxZ =  std::numeric_limits<float>::min();
@@ -495,11 +492,7 @@ bool GeometryCheckup::processMtlFile(std::string path_and_file_3d_model, std::st
 //check the material file and write a temporary material file out if non exists.
 bool GeometryCheckup::writeMaterialFile(std::string path_and_file, std::string output_path_and_file)
 {
-#ifdef _MSC_VER <= 1916
-	bool mtl_file = std::experimental::filesystem::exists(path_and_file);
-#else
-	bool mtl_file = std::filesystem::exists(path_and_file);
-#endif
+	bool mtl_file = surfe::FileUtils::Exists(path_and_file);
 
 	std::ofstream outfile(output_path_and_file, std::ofstream::out);
 
@@ -583,7 +576,7 @@ float GeometryCheckup::computeMinVoxelDensity(void)
 
 	if(_max_size == 0) return 0.00;
 
-	float density = std::max(_max_size / float(max_voxel), 0.005f);
+	float density = (std::max)(_max_size / float(max_voxel), 0.005f);
 
 	return density;
 }

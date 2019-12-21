@@ -66,7 +66,10 @@ March 4, 2019
 #include "PolyhedronGeometry.h" // for the Polyhedron geometry
 #include "SurfacePosRenderer.h"
 
-class PolyhedronViewRenderer : public SurfacePosRenderer
+namespace surfe {
+
+
+class PolyhedronViewRenderer : public surfe::SurfacePosRenderer
 {
 public:
 
@@ -119,7 +122,7 @@ private:
 
 };
 
-
+}//namespace surfe 
 
 
 #endif

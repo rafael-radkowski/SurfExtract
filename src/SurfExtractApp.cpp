@@ -32,7 +32,7 @@ SurfExtractApp::SurfExtractApp()
 	_renderer->addRenderFcn(std::bind(&SurfExtractApp::render_fcn, this, _1, _2));
 	_renderer->addKeyboardCallback(std::bind(&SurfExtractApp::keyboard_cb, this, _1, _2));
 
-	_pview = new PolyhedronViewRenderer(_window_width, _window_height, 1024, 1024);
+	_pview = new surfe::PolyhedronViewRenderer(_window_width, _window_height, 1024, 1024);
 	_pview->setVerbose(false); // set first to get all the output info
 	_pview->setOutputPath("temp");
 
@@ -405,9 +405,9 @@ void SurfExtractApp::check_output_path(std::string path)
 
 	std::string sub_path = path.substr(0,idx0);
 
-	if(!FileUtils::Exists(sub_path))
+	if(!surfe::FileUtils::Exists(sub_path))
 	{
-		FileUtils::CreateDirectories(sub_path);
+		surfe::FileUtils::CreateDirectories(sub_path);
 	}
 
 }

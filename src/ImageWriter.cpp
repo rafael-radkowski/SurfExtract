@@ -17,8 +17,8 @@ ImageWriter::ImageWriter()
 	list_str.append("/");
 	list_str.append(_logfile_name);
 #ifdef _USE_EXP
-	if (std::experimental::filesystem::exists(list_str))
-		std::experimental::filesystem::remove(list_str);
+//	if (std::experimental::filesystem::exists(list_str))
+//		std::experimental::filesystem::remove(list_str);
 #else
 	if (std::filesystem::exists(list_str))
 		std::filesystem::remove(list_str);
@@ -38,7 +38,7 @@ Set the output path and name
 @param path - the output file path
 @param name - the file name as string
 */
-void ImageWriter::setPathAndImageName(string path, string name)
+void ImageWriter::setPathAndImageName(std::string path, std::string name)
 {
 	_output_file_path = path;
 	_output_file_name = name;
@@ -294,9 +294,9 @@ Check whether the path exists.
 Create a folder if the path does not exist.
 @param path - string with the relative or absolute path.
 */
-bool ImageWriter::checkFolder(string path)
+bool ImageWriter::checkFolder(std::string path)
 {
-	bool ret = std::experimental::filesystem::exists(path);
+	bool ret = surfe::FileUtils::Exists(path);
 
 	if (ret)
 	{
@@ -306,8 +306,8 @@ bool ImageWriter::checkFolder(string path)
 		list_str.append("/");
 		list_str.append(_logfile_name);
 #ifdef _USE_EXP
-		if (std::experimental::filesystem::exists(list_str))
-			std::experimental::filesystem::remove(list_str);
+	//	if (std::experimental::filesystem::exists(list_str))
+	//		std::experimental::filesystem::remove(list_str);
 #else
 		if (std::filesystem::exists(list_str))
 			std::filesystem::remove(list_str);
@@ -317,8 +317,7 @@ bool ImageWriter::checkFolder(string path)
 
 
 	if (!ret) {
-
-		std::experimental::filesystem::create_directory(path);
+		surfe::FileUtils::CreateOneDirectory(path);
 	}
 
 	// create a file with a header if no file exist.
@@ -328,7 +327,7 @@ bool ImageWriter::checkFolder(string path)
 	list_str.append(_logfile_name);
 
 	// write a header if the file does not exist
-	if (!FileUtils::Exists(list_str)) {
+	if (!surfe::FileUtils::Exists(list_str)) {
 		// create a header
 		std::ofstream of(list_str, std::ifstream::out | std::ifstream::app);
 		if (of.is_open()){

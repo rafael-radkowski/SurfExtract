@@ -6,7 +6,7 @@ Constructor
 @param - window_width, window_height - width and height of the opengl, glfw output image in pixel
 @param - image_width, image_height - width and height of the image to be rendered and saved to a file.
 */
-PolyhedronViewRenderer::PolyhedronViewRenderer(int window_width, int window_height, int image_width, int image_height) :
+surfe::PolyhedronViewRenderer::PolyhedronViewRenderer(int window_width, int window_height, int image_width, int image_height) :
 	SurfacePosRenderer(window_width, window_height, image_width, image_height)
 {
 	_segments = 30;
@@ -21,7 +21,7 @@ PolyhedronViewRenderer::PolyhedronViewRenderer(int window_width, int window_heig
 	_subdivisions = 0;
 }
 
-PolyhedronViewRenderer::~PolyhedronViewRenderer()
+surfe::PolyhedronViewRenderer::~PolyhedronViewRenderer()
 {
 
 }
@@ -33,7 +33,7 @@ Set the number of subdivisions for the polyheder
 The polyheder points define the camera view points. 
 @param subdivisions - number of subdivisions. 0 is an Icosahedron
 */
-void PolyhedronViewRenderer::create(float camera_distance, int subdivisions)
+void surfe::PolyhedronViewRenderer::create(float camera_distance, int subdivisions)
 {
 
 	if(_verbose)
@@ -56,7 +56,7 @@ void PolyhedronViewRenderer::create(float camera_distance, int subdivisions)
 
 
 	std::pair< vector<glm::vec3>, vector<glm::ivec3> > final_mesh;
-	final_mesh  = arlab::PolyhedronGeometry::Create(_subdivisions);
+	final_mesh  = surfe::PolyhedronGeometry::Create(_subdivisions);
 
 	_points = final_mesh.first;
 	_normals = final_mesh.first;
@@ -75,7 +75,7 @@ Draw the image sequence and save all images to a file
 @return - false, if images still need to be rendered.
 			true, id all images were saved to a file.
 */
-bool PolyhedronViewRenderer::draw_sequence(void)
+bool surfe::PolyhedronViewRenderer::draw_sequence(void)
 {
 	if (_N_current < _N) {
 		glm::vec3 p = _points[_N_current];

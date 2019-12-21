@@ -13,7 +13,7 @@ Eigen::Matrix4f MatrixFileUtils::ReadMatrix4f(string path_and_file)
 	Eigen::Matrix4f	matrix = Eigen::Matrix4f::Identity();
 
 
-	if (!std::experimental::filesystem::exists(path_and_file))
+	if (!surfe::FileUtils::Exists(path_and_file))
 	{
 		_cprintf("\n[MatrixFileUtils] - ERROR: file %s does not exist. Matrix is identity.\n", path_and_file.c_str());
 		return matrix;
@@ -89,7 +89,7 @@ Eigen::Matrix3f MatrixFileUtils::ReadMatrix3f(string path_and_file)
 	Eigen::Matrix3f	matrix = Eigen::Matrix3f::Identity();
 
 
-	if (!std::experimental::filesystem::exists(path_and_file))
+	if (!surfe::FileUtils::Exists(path_and_file))
 	{
 		_cprintf("\n[MatrixFileUtils] - ERROR: file %s does not exist. Matrix is identity.\n", path_and_file.c_str());
 		return matrix;
@@ -163,7 +163,7 @@ Eigen::VectorXf MatrixFileUtils::ReadVectorXf(string path_and_file)
 	Eigen::VectorXf	matrix(5);
 
 
-	if (!std::experimental::filesystem::exists(path_and_file))
+	if (!surfe::FileUtils::Exists(path_and_file))
 	{
 		_cprintf("\n[MatrixFileUtils] - ERROR: file %s does not exist. Matrix is identity.\n", path_and_file.c_str());
 		return matrix;

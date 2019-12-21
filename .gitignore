@@ -28,3 +28,4 @@ src/tests/tests.dir/
 src/tests/testcase0.ply
 *.un~
 *.swp
+lib/

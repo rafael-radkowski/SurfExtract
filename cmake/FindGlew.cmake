@@ -8,7 +8,7 @@
 # The following variables are produced and usable in a CMakeList.txt file after cmake is done
 # GLEW_INCLUDE_DIR  the location of the gl/glew.h header file. 
 # GLEW_FOUND        True, if glew can be found. 
-# GLEW_LIBs		    the names of the glew32.lib and glew32d.lib libraries
+# GLEW_LIBS		    the names of the glew32.lib and glew32d.lib libraries
 #
 # To help locate the library and include file, you can define a 
 # variable called GLEW_ROOT which points to the root of the glfw library 

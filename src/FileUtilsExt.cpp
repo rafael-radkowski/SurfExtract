@@ -1,6 +1,8 @@
-#include "FileUtils.h"
+#include "FileUtilsExt.h"
 
 
+
+using namespace surfe;
 
  /*
 Check if a file exits. 
@@ -92,7 +94,7 @@ bool FileUtils::Remove(string path)
 
 	
 //static 
-bool FileUtils::CreateDirectory(string path)
+bool FileUtils::CreateOneDirectory(string path)
 {
 #if _MSC_VER >= 1920 && _MSVC_LANG  == 201703L 
 	return std::filesystem::create_directory(path);

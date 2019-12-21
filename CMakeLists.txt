@@ -86,5 +86,19 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
 
+# create the directory for all dependencies and download the dependencies.
+find_path( DEP_DIR NAMES dep/GLSupport/include/CommonTypes.h)
+
+if( (NOT DEP_DIR) OR (NOT EXISTS ${DEP_DIR}))
+	file(MAKE_DIRECTORY "./dep")
+
+	execute_process(COMMAND git submodule update --init -- dep
+					WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+else()
+
+
+endif()
+	
 
 add_subdirectory(src)

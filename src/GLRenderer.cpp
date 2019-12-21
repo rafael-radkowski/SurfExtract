@@ -34,10 +34,9 @@ bool GLRenderer::create(int window_width, int window_height, string name)
 	_window_height = window_height;
 
 	//_projMatrix = glm::perspective(1.2f, (float)window_width / (float)window_height, 0.1f, 1000.f);
-
 	
 	// Init the GLFW Window and glew
-    _window = cs557::initWindow(window_width, window_height, name);
+    _window = cs557::initWindow(  window_height, window_width, name);
     cs557::initGlew();
 
 	// coordinate system

@@ -6,8 +6,8 @@ SurfExtractApp::SurfExtractApp()
 {
 	_image_width = 1024; 
 	_image_height = 1024;
-	_window_width = 1024 * 2; 
-	_window_height = 768 * 2;
+	_window_width = 1024; 
+	_window_height = 768;
 	_pview_complete = false;
 	_pview_start = false;
 	_verbose = false;

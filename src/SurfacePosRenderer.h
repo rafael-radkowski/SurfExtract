@@ -13,6 +13,12 @@ Iowa State University
 rafael@iastate.edu
 March 2019
 MIT License
+
+--------------------------------------------------------------------------
+Last edits:
+
+Dec 20, 2019, RR
+- Added CommonTypes.h 
 */
 
 #include <iostream>
@@ -41,6 +47,7 @@ MIT License
 #include "ModelPlane.h"
 #include "RenderToTexture.h"
 #include "ImageWriter.h"
+#include "CommonTypes.h"
 
 using namespace std;
 

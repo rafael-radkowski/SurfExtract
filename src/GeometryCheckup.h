@@ -26,6 +26,8 @@ Last edits:
 Dec 15, 2019, RR
 - Added a function to scale the outgoing object. 
 
+Dec 21, 2019, RR
+- Added a version check for the file system. 
 */
 
 #include <vector>
@@ -36,11 +38,16 @@ Dec 15, 2019, RR
 #include <vector>
 #include <algorithm>
 #include <cassert>
-#ifdef _MSC_VER <= 1916
-#include <experimental/filesystem>
-#else
+
+#if _MSC_VER >= 1920 && _MSVC_LANG  == 201703L 
 #include <filesystem>
+#else
+#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+#include <experimental/filesystem>
 #endif
+
+
 #ifdef __WIN32
 	#include <conio.h>
 #endif

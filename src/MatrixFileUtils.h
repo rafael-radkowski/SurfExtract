@@ -2,7 +2,12 @@
 
 #include <iostream>
 #include <fstream>
-#include <experimental\filesystem>
+#if _MSC_VER >= 1920 && _MSVC_LANG  == 201703L 
+	#include <filesystem>
+#else
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+	#include <experimental/filesystem>
+#endif
 #include <conio.h>
 
 // Eigen 3

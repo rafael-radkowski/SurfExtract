@@ -35,6 +35,7 @@ Latest edits
 #include <filesystem>
 #else
 #define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
 #include <experimental/filesystem>
 #endif
 

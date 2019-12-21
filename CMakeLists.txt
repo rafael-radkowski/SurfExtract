@@ -67,7 +67,7 @@ endif()
 
 # Include dirs
 include_directories("C:/SDK/opencv-3.4.5/build/include")
-include_directories(${OPENCV_INCLUDE_DIR})
+include_directories(${OpenCV_INCLUDE_DIR})
 include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(${OPENGL_INCLUDE_DIR})
 include_directories(${GLEW_INCLUDE_DIR})
@@ -75,7 +75,7 @@ include_directories(${GLFW3_INCLUDE_DIR})
 include_directories(${GLM_INCLUDE_DIR})
 include_directories(./src)
 include_directories(./include)
-include_directories(./dep/include)
+include_directories(./dep/GLSupport/include)
 
 
 add_compile_definitions(_WITH_CAMERA)
@@ -86,5 +86,31 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
 
+# create the directory for all dependencies and download the dependencies.
+find_path( GLSUPPORT_DIR NAMES dep/GLSupport/README.md)
+
+if( (NOT GLSUPPORT_DIR) OR (NOT EXISTS ${GLSUPPORT_DIR}))
+	file(MAKE_DIRECTORY "./dep")
+
+	execute_process(COMMAND git submodule update --init -- dep
+					WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+	set(GLSUPPORT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dep/GLSupport 
+					CACHE PATH "glSupport dir" FORCE)
+
+
+	add_library(GLUtils INTERFACE)
+	target_include_directories(GLUtils INTERFACE
+								$<BUILD_INTERFACE:${GLSUPPORT_DIR}/include>
+								$<INSTALL_INTERFACE:./dep/lib>)
+		
+else()
+  # update the submodule to the latest version.
+  #execute_process(COMMAND git submodule update --remote --merge
+  #	  				WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+
+endif()
+	
 
 add_subdirectory(src)

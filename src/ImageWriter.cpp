@@ -16,9 +16,13 @@ ImageWriter::ImageWriter()
 	list_str.append(_output_file_path);
 	list_str.append("/");
 	list_str.append(_logfile_name);
+#ifdef _USE_EXP
 	if (std::experimental::filesystem::exists(list_str))
 		std::experimental::filesystem::remove(list_str);
-
+#else
+	if (std::filesystem::exists(list_str))
+		std::filesystem::remove(list_str);
+#endif
 	
 
 }
@@ -301,8 +305,13 @@ bool ImageWriter::checkFolder(string path)
 		list_str.append(_output_file_path);
 		list_str.append("/");
 		list_str.append(_logfile_name);
+#ifdef _USE_EXP
 		if (std::experimental::filesystem::exists(list_str))
 			std::experimental::filesystem::remove(list_str);
+#else
+		if (std::filesystem::exists(list_str))
+			std::filesystem::remove(list_str);
+#endif
 	}
 
 
@@ -319,7 +328,7 @@ bool ImageWriter::checkFolder(string path)
 	list_str.append(_logfile_name);
 
 	// write a header if the file does not exist
-	if (!std::experimental::filesystem::exists(list_str)) {
+	if (!FileUtils::Exists(list_str)) {
 		// create a header
 		std::ofstream of(list_str, std::ifstream::out | std::ifstream::app);
 		if (of.is_open()){

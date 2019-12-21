@@ -26,13 +26,22 @@ Jan 21, 2019:
 - Added the pose and orientation of the model to the log file
 - Added a variable for the log file to the class
 - Fixed a bug that prevented that the class cleans the output folder. 
+Dec 21, 2019
+- Added FileUtils.h and replaced the c++ api with fileutils apis. 
 */
 
 // stl
 #include <iostream>
 #include <vector>
 #include <string>
+#if _MSC_VER >= 1920 && _MSVC_LANG  == 201703L 
+#include <filesystem>
+#else
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
 #include <experimental/filesystem>
+#define _USE_EXP
+#endif
 
 // opencv
 #include <opencv2/opencv.hpp>
@@ -51,6 +60,7 @@ Jan 21, 2019:
 #include "MatrixFileUtils.h"
 #include "MatrixHelpers.h"
 #include "types.h"
+#include "FileUtils.h"
 
 using namespace std;
 

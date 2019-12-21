@@ -1,0 +1,4 @@
+[submodule "dep/GLSupport"]
+	path = dep/GLSupport
+	url = https://github.com/rafael-radkowski/GLSupport.git
+	branch = master

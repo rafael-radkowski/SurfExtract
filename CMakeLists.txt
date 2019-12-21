@@ -104,12 +104,13 @@ if( (NOT GLSUPPORT_DIR) OR (NOT EXISTS ${GLSUPPORT_DIR}))
 								$<BUILD_INTERFACE:${GLSUPPORT_DIR}/include>
 								$<INSTALL_INTERFACE:./dep/lib>)
 		
+	add_subdirectory(dep/GLSupport)
 else()
   # update the submodule to the latest version.
   #execute_process(COMMAND git submodule update --remote --merge
   #	  				WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-
+	add_subdirectory(dep/GLSupport)
 endif()
 	
 

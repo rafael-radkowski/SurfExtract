@@ -29,3 +29,9 @@ src/tests/testcase0.ply
 *.un~
 *.swp
 lib/
+data/models/Part_A.STL
+src/tests/main_test.cpp
+data/models/new_engine_block.obj
+data/meshlab/rv10.mlp
+data/models/Part_A.obj
+src/tests/New Text Document.txt

@@ -5,20 +5,25 @@ cmake_policy(SET CMP0074 NEW)
 cmake_policy(SET CMP0015 NEW)
 
 file(GLOB SURFE_SRC
-    "*.h"
     "*.cpp"
 )
 
+file(GLOB SURFE_INC
+    "*.h"
+)
+
 source_group(src FILES ${SURFE_SRC})
+source_group(include FILES ${SURFE_INC})
+
 
 # remove the export file from the main app
-set(Console_src ${SURFE_SRC})
+set(Console_src ${SURFE_SRC} ${SURFE_INC})
 list(REMOVE_ITEM Console_src ${CMAKE_CURRENT_SOURCE_DIR}/SurfExtractExport.cpp)
 list(REMOVE_ITEM Console_src ${CMAKE_CURRENT_SOURCE_DIR}/SurfExtractAppEx.h)
 list(REMOVE_ITEM Console_src ${CMAKE_CURRENT_SOURCE_DIR}/SurfExtractAppEx.cpp)
 
 # remove the main.cpp file from the dll
-set(Dll_src ${SURFE_SRC})
+set(Dll_src ${SURFE_SRC} ${SURFE_INC})
 list(REMOVE_ITEM Dll_src ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 
 
@@ -41,6 +46,8 @@ set(CMAKE_DEBUG_POSTFIX d)
 
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
+
+
 # Create an executable
 add_executable(${PROJECT_NAME}  ${Console_src} )
 
@@ -48,6 +55,9 @@ set(GLSupport
 	debug GLUtilsd.lib
 	optimized GLUtils.lib
 )
+
+# add GLUtils as a dependency
+add_dependencies(${PROJECT_NAME} GLUtils)
 
 # Add libraries
 target_link_libraries(${PROJECT_NAME}   ${GLEW_LIBS}  ${GLFW3_LIBS} ${OPENGL_LIBRARIES}  ${OpenCV_LIBS}  ${GLSupport} )

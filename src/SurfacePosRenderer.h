@@ -48,7 +48,7 @@ Dec 20, 2019, RR
 #include "RenderToTexture.h"
 #include "ImageWriter.h"
 #include "CommonTypes.h"
-
+#include "GLSLSource.h"
 
 namespace surfe
 {

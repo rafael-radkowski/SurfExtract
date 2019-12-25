@@ -9,7 +9,6 @@ MIT License
 
 ---------------------------------------------------
 Last edits:
-
 */
 
 #include <iostream>
@@ -59,7 +58,7 @@ int main(int argc, char** argv) {
 	}
 
 	cout << "SurfExtract" << endl;
-	cout << "Version 1.1.1" << endl;
+	cout << "Version 1.1.3" << endl;
 	cout << "Extract a point cloud from all visible surfaces and ignore hidden surfaces\n" << endl;
 	cout << "Rafael Radkowski" << endl;
 	cout << "rafael@iastate.edu" << endl;
@@ -80,7 +79,7 @@ int main(int argc, char** argv) {
 	cout << "2 \t enable/disable point cloud rendering" << endl;
 	cout << "3 \t enable/disable normal vector rendering (after all points are done)" << endl;
 	cout << "------------------------------------------------------------------------" << endl;
-	cout << "\nIGNORE THE MATERIAL WARNINGS\n\n" << endl;
+	cout << "\n\n" << endl;
 
 
 	SurfExtractApp* sea = new SurfExtractApp();

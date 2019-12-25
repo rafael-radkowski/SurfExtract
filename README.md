@@ -58,3 +58,8 @@ A binary version pre-compiled for Windows 10 is available on DropBox
 * [Link](https://www.dropbox.com/sh/npenx0m40lyjx46/AAA3Gpv0HK-AxPzqTPi0U4DAa?dl=0&lst=)
 * Comes with all basic features as described above. 
 
+### Version history
+V 1.1.3
+- moved all shader code to cpp files. 
+- automatic centroid detection
+- calculate camera distance depending on the size of the object. 

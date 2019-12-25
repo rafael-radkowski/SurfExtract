@@ -1,5 +1,8 @@
 #include "SurfacePosRenderer.h"
 
+// if defined, the glsl shader code is read from a file. 
+// It comes from a hard-coded string otherwise. 
+//#define GLSL_EXP
 
 /*
 Constructor
@@ -38,9 +41,11 @@ Load a 3D model from a file
 */
 bool surfe::SurfacePosRenderer::setModelFromFile(std::string path_and_file)
 {
-
+#ifdef GLSL_EXP
 	_program = cs557::LoadAndCreateShaderProgram("position_renderer.vs", "position_renderer.fs");
-
+#else
+	_program = cs557::CreateShaderProgram(surfe::glsl_position_renderer_vs, surfe::glsl_position_renderer_fs);
+#endif
 	_model = new cs557::OBJModel();
 	_model->create(path_and_file, _program);
 	_model->setModelMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)));
@@ -102,8 +107,12 @@ Prepare a set of visual helpers
 bool surfe::SurfacePosRenderer::prepareHelpers(void)
 {
 	// sphere
-
+#ifdef GLSL_EXP
 	unsigned int program = cs557::LoadAndCreateShaderProgram("lit_scene.vs", "lit_scene.fs");
+#else
+	unsigned int program = cs557::CreateShaderProgram(surfe::glsl_lit_scene_vs, surfe::glsl_lit_scene_fs);
+#endif
+
 	_sphere = new cs557::Sphere();
 	_sphere->create(0.05, 30, 40, program);
 
@@ -121,7 +130,11 @@ bool surfe::SurfacePosRenderer::prepareHelpers(void)
 
 	//display
 	// Load the shader program
+#ifdef GLSL_EXP
 	int shader = cs557::LoadAndCreateShaderProgram("display.vs", "display.fs");
+#else
+	int shader = cs557::CreateShaderProgram(surfe::glsl_display_renderer_vs, surfe::glsl_display_renderer_fs);
+#endif
 
 	// create a plane
 	_display.create(0.5, 0.5, shader);

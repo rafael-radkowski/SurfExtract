@@ -46,6 +46,10 @@ set(tests
 	optimized GLUtils.lib
 )
 
+# add GLUtils as a dependency
+add_dependencies(${PROJECT_NAME} GLUtils)
+
+
 # Add libraries
 target_link_libraries(tests  ${GLEW_LIBRARIES} ${GLEW_LIBRARY} ${GLFW3_LIBRARY} ${OPENGL_LIBRARIES}  ${OPENCV_LIBRARIES}  ${GLSupport} )
 
